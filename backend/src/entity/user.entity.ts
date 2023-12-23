@@ -56,11 +56,11 @@ export class User {
   @Column({ nullable: true })
   address?: string;
 
-  @Column()
-  otp!: string;
+  @Column({ nullable: true })
+  otp!: number | null;
 
-  @Column()
-  otp_expiry!: Date;
+  @Column({ nullable: true })
+  otp_expiry!: Date | null;
 
   @CreateDateColumn()
   created_at!: Date;

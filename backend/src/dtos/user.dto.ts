@@ -3,7 +3,9 @@ import {
   IsEnum,
   IsIn,
   IsNotEmpty,
+  IsNumber,
   IsString,
+  MaxLength,
   MinLength,
 } from "class-validator";
 import { Transform } from "class-transformer";
@@ -35,3 +37,12 @@ export class CreateUserDto {
   confirm_password!: string;
 }
 
+export class VerifyEmailDto {
+  @IsEmail()
+  @Transform(({ value }) => value.toLowerCase())
+  @IsNotEmpty()
+  email!: string;
+
+  @IsNumber()
+  otp!: number;
+}

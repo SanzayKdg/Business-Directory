@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { OTP_EXPIRY } from "../@config/constants.config.js";
 import { sendmail } from "../@helpers/sendmail.js";
 import { defualtMailTemplate } from "../@helpers/mailTemplate.js";
-import { CreateUserDto } from "../dtos/user.dto.js";
+import { CreateUserDto, VerifyEmailDto } from "../dtos/user.dto.js";
 import { validate } from "class-validator";
 
 // ---------------------- REGISTER ---------------------------------
@@ -35,19 +35,21 @@ export const register = async (req: any, res: any, next: any) => {
     const errors = await validate(payload);
 
     if (errors.length > 0) {
-      const v_error = errors.reduce((acc: any, error) => {
+      const validation_error = errors.reduce((acc: any, error) => {
         // Destructuring error object and getting property and constraints
         // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
         const { property, constraints } = error;
         acc[property] = Object.values(constraints || {});
         return acc;
       }, {});
-      return next(res.status(400).json({ success: false, message: v_error }));
+      return next(
+        res.status(400).json({ success: false, message: validation_error })
+      );
     }
 
     // check if user with same email exists
     const email_exists = await TypeOrmConfig.getRepository(User).findOne({
-      where: { email: payload.email },
+      where: { email },
     });
 
     if (email_exists) {
@@ -59,7 +61,7 @@ export const register = async (req: any, res: any, next: any) => {
       );
     }
 
-    if (payload.password !== payload.confirm_password) {
+    if (password !== confirm_password) {
       return next(
         res
           .status(400)
@@ -67,14 +69,14 @@ export const register = async (req: any, res: any, next: any) => {
       );
     }
     //   generate otp number
-    const otp = Math.floor(Math.random() * 100000).toString();
+    const otp = Math.floor(Math.random() * 100000);
 
     //   register new user
     const user = await TypeOrmConfig.getRepository(User).save({
-      email: payload.email,
-      full_name: payload.full_name,
-      password: await bcrypt.hash(payload.password, 12),
-      user_role: payload.user_role,
+      email,
+      full_name,
+      password: await bcrypt.hash(password, 12),
+      user_role,
       otp,
       otp_expiry: new Date(Date.now() + OTP_EXPIRY * 60 * 1000),
     });
@@ -95,10 +97,73 @@ export const register = async (req: any, res: any, next: any) => {
       message: `User registered. Please check your mail for verification.`,
       user,
     });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error });
+  } catch (error: any) {
+    return next(
+      res.status(500).json({ success: false, message: error.message })
+    );
   }
 };
 
 // ---------------------- EMAIL VERIFICATION ---------------------------------
-export const emailVerify = async (req: any, res: any, next: any) => {};
+export const emailVerify = async (req: any, res: any, next: any) => {
+  try {
+    const { email, otp } = req.body;
+    const payload = new VerifyEmailDto();
+
+    payload.email = email;
+    payload.otp = otp;
+
+    // Validation
+    const errors = await validate(payload);
+
+    if (errors.length > 0) {
+      const validation_error = errors.reduce((acc: any, error) => {
+        // Destructuring error object and getting property and constraints
+        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
+        const { property, constraints } = error;
+        acc[property] = Object.values(constraints || {});
+        return acc;
+      }, {});
+      return next(
+        res.status(400).json({ success: false, message: validation_error })
+      );
+    }
+
+    // check if user with email exists
+    const user = await TypeOrmConfig.getRepository(User).findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      return next(
+        res.status(404).json({
+          success: false,
+          message: "Email is invalid or doesn't exists",
+        })
+      );
+    }
+
+    // check if otp is correct
+    if (payload.otp !== user?.otp) {
+      return next(
+        res
+          .status(400)
+          .json({ success: false, message: "OTP is inavlid or expired" })
+      );
+    }
+
+    user.otp = null;
+    user.otp_expiry = null;
+    user.is_verified = true;
+    // save user and set verified true
+    await TypeOrmConfig.getRepository(User).save(user);
+
+    res
+      .status(200)
+      .json({ success: true, message: "User verified successfully." });
+  } catch (error: any) {
+    return next(
+      res.status(500).json({ success: false, message: error.message })
+    );
+  }
+};
