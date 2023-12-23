@@ -1,0 +1,11 @@
+NMP Packages
+1. express
+2. concurrently
+3. cors
+4. body-parser
+5. swagger-express-ts
+6. typeorm
+7. dotenv
+8. typescript
+9. @types/express
+10. @types/node

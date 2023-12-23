@@ -13,7 +13,15 @@ export const BASE_URL = {
 };
 
 export const DATABSE = {
-  host: process.env.DB_HOST!,
-  port: parseInt(process.env.DB_PORT!),
+  uri: process.env.DB_URI!,
   database: process.env.DB_NAME!,
+};
+
+export const OTP_EXPIRY = parseInt(process.env.OTP_EXPIRY!);
+
+export const SMTP_INFO = {
+  user: process.env.SMPT_MAIL!,
+  host: process.env.SMPT_HOST!,
+  port: parseInt(process.env.SMPT_PORT!),
+  password: process.env.SMPT_PASSWORD!,
 };
