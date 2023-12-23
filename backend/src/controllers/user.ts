@@ -21,13 +21,15 @@ import { validate } from "class-validator";
 
 export const register = async (req: any, res: any, next: any) => {
   try {
-    const payload = new CreateUserDto();
+    const { email, password, user_role, confirm_password, full_name } =
+      req.body;
 
-    payload.email = req.body.email;
-    payload.full_name = req.body.full_name;
-    payload.user_role = req.body.user_role;
-    payload.password = req.body.password;
-    payload.confirm_password = req.body.confirm_password;
+    const payload = new CreateUserDto();
+    payload.email = email;
+    payload.full_name = full_name;
+    payload.user_role = user_role;
+    payload.password = password;
+    payload.confirm_password = confirm_password;
 
     // Validation
     const errors = await validate(payload);
@@ -99,6 +101,4 @@ export const register = async (req: any, res: any, next: any) => {
 };
 
 // ---------------------- EMAIL VERIFICATION ---------------------------------
-export const emailVerify = async (req: any, res: any, next: any) => {
-  
-};
+export const emailVerify = async (req: any, res: any, next: any) => {};
