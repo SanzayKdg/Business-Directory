@@ -4,8 +4,9 @@ import bcrypt from "bcryptjs";
 import { OTP_EXPIRY } from "../@config/constants.config.js";
 import { sendmail } from "../@helpers/sendmail.js";
 import { defualtMailTemplate } from "../@helpers/mailTemplate.js";
-import { CreateUserDto, VerifyEmailDto } from "../dtos/user.dto.js";
+import { CreateUserDto, LoginDto, VerifyEmailDto } from "../dtos/user.dto.js";
 import { validate } from "class-validator";
+import sendToken from "../@helpers/sendToken.js";
 
 // ---------------------- REGISTER ---------------------------------
 // /** *
@@ -161,6 +162,58 @@ export const emailVerify = async (req: any, res: any, next: any) => {
     res
       .status(200)
       .json({ success: true, message: "User verified successfully." });
+  } catch (error: any) {
+    return next(
+      res.status(500).json({ success: false, message: error.message })
+    );
+  }
+};
+
+// ---------------------- LOGIN ---------------------------------
+export const login = async (req: any, res: any, next: any) => {
+  try {
+    const { email, password } = req.body;
+    const payload = new LoginDto();
+    payload.email = email;
+    payload.password = password;
+
+    // validation
+    const errors = await validate(payload);
+
+    if (errors.length > 0) {
+      const validation_error = errors.reduce((acc: any, error) => {
+        // Destructuring error object and getting property and constraints
+        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
+        const { property, constraints } = error;
+        acc[property] = Object.values(constraints || {});
+        return acc;
+      }, {});
+      return next(
+        res.status(400).json({ success: false, message: validation_error })
+      );
+    }
+
+    // check email if user exists
+    const user = await TypeOrmConfig.getRepository(User).findOne({
+      where: { email },
+      select: { password },
+    });
+    if (!email) {
+      return next(
+        res.status(400).json({ success: false, message: "Invalid Credentials" })
+      );
+    }
+
+    // match password
+    const passwordMatch = await user?.comparePassword(password);
+    if (!passwordMatch) {
+      return next(
+        res.status(400).json({ success: false, message: "Invalid Credentials" })
+      );
+    }
+
+    // if both matches send token to user
+    sendToken(user, 200, res, "Login Success");
   } catch (error: any) {
     return next(
       res.status(500).json({ success: false, message: error.message })

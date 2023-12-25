@@ -44,5 +44,16 @@ export class VerifyEmailDto {
   email!: string;
 
   @IsNumber()
+  @IsNotEmpty()
   otp!: number;
+}
+export class LoginDto {
+  @IsEmail()
+  @Transform(({ value }) => value.toLowerCase())
+  @IsNotEmpty()
+  email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password!: string;
 }

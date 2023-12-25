@@ -8,6 +8,9 @@ import {
   ObjectId,
   OneToMany,
 } from "typeorm";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { JWT_EXPIRE, JWT_SECRET } from "../@config/constants.config.js";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -75,4 +78,16 @@ export class User {
 
   // @Column(type => Business)
   //   businesses: Business[];
+
+  // JWT TOKEN
+  getJWTToken() {
+    return jwt.sign({ id: this.id }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRE,
+    });
+  }
+
+  // Compare password
+  async comparePassword(password: string) {
+    return await bcrypt.compare(password, this.password);
+  }
 }

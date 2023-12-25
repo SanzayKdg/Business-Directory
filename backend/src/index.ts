@@ -8,7 +8,7 @@ import specs from "./@config/swagger.config.js";
 import User from "./routes/User.js";
 import helmet from "helmet";
 import "reflect-metadata";
-
+import cookieParser from "cookie-parser"
 const app = express();
 
 // ------------------------------ DATABASE CONNECTION ----------------------------------------------
@@ -19,9 +19,12 @@ TypeOrmConfig.initialize()
 // ------------------------------  MIDDLEWARES  ----------------------------------------------
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.json())
+app.use(cookieParser())
 app.use(cors());
 app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
 app.use(helmet());
+
 // ------------------------------ ROUTES ----------------------------------------------
 app.use("/user", User);
 
