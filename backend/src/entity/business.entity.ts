@@ -4,7 +4,7 @@ import {
   Entity,
   ObjectId,
   ObjectIdColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 
 import { Point } from "geojson";
@@ -95,4 +95,6 @@ export class Business {
 
   @UpdateDateColumn()
   updated_at!: Date;
+
+  // @
 }

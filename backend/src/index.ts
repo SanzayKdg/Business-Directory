@@ -2,7 +2,7 @@ import express from "express";
 import { PORT } from "./@config/constants.config.js";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { TypeOrmConfig } from "./@config/typeorm.config.js";
+import { connectDB } from "./@config/db.config.js";
 import swaggerui from "swagger-ui-express";
 import specs from "./@config/swagger.config.js";
 import Auth from "./routes/auth.js";
@@ -14,9 +14,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 // ------------------------------ DATABASE CONNECTION ----------------------------------------------
-TypeOrmConfig.initialize()
-  .then(() => console.log("Connected to database"))
-  .catch((err: any) => console.log("Unable to connect to databse" + err));
+connectDB();
 
 // ------------------------------  MIDDLEWARES  ----------------------------------------------
 app.use(bodyParser.urlencoded({ extended: true }));

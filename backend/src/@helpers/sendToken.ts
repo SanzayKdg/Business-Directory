@@ -17,7 +17,7 @@ const sendToken = (
   res
     .status(status_code)
     .cookie("token", token, options)
-    .json({ success: true, message });
+    .json({ success: true, message, user });
 };
 
 export default sendToken;

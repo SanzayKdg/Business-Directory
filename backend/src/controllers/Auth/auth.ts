@@ -1,18 +1,12 @@
-import { TypeOrmConfig } from "../@config/typeorm.config.js";
-import { User } from "../entity/user.entity.js";
 import bcrypt from "bcryptjs";
-import { OTP_EXPIRY } from "../@config/constants.config.js";
-import { sendmail } from "../@helpers/sendmail.js";
-import { defualtMailTemplate } from "../@helpers/mailTemplate.js";
-import {
-  CreateUserDto,
-  LoginDto,
-  UpdateUserDto,
-  VerifyEmailDto,
-} from "../dtos/user.dto.js";
+import { OTP_EXPIRY } from "../../@config/constants.config.js";
+import { sendmail } from "../../@helpers/sendmail.js";
+import { defualtMailTemplate } from "../../@helpers/mailTemplate.js";
 import { validate } from "class-validator";
-import sendToken from "../@helpers/sendToken.js";
+import sendToken from "../../@helpers/sendToken.js";
 import { NextFunction, Request, Response } from "express";
+import { User } from "../../models/user.js";
+import { CreateUserDto, LoginDto, VerifyEmailDto } from "./dto/auth.dto.js";
 
 // ---------------------- REGISTER ---------------------------------
 // /** *
@@ -55,7 +49,7 @@ export const register = async (req: any, res: any, next: any) => {
     }
 
     // check if user with same email exists
-    const email_exists = await TypeOrmConfig.getRepository(User).findOne({
+    const email_exists = await User.findOne({
       where: { email },
     });
 
@@ -63,7 +57,7 @@ export const register = async (req: any, res: any, next: any) => {
       return next(
         res.status(400).json({
           success: false,
-          message: "User with this email already exists",
+          message: "Email already in use.",
         })
       );
     }
@@ -79,10 +73,10 @@ export const register = async (req: any, res: any, next: any) => {
     const otp = Math.floor(Math.random() * 100000);
 
     //   register new user
-    const user = await TypeOrmConfig.getRepository(User).save({
+    const user = await User.create({
       email,
       full_name,
-      password: await bcrypt.hash(password, 12),
+      password,
       user_role,
       otp,
       otp_expiry: new Date(Date.now() + OTP_EXPIRY * 60 * 1000),
@@ -135,7 +129,7 @@ export const emailVerify = async (req: any, res: any, next: any) => {
     }
 
     // check if user with email exists
-    const user = await TypeOrmConfig.getRepository(User).findOne({
+    const user = await User.findOne({
       where: { email },
     });
 
@@ -161,11 +155,9 @@ export const emailVerify = async (req: any, res: any, next: any) => {
     user.otp_expiry = null;
     user.is_verified = true;
     // save user and set verified true
-    await TypeOrmConfig.getRepository(User).save(user);
+    await user.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "User verified successfully." });
+    sendToken(user, 200, res, "Account Verified");
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -196,10 +188,7 @@ export const login = async (req: any, res: any, next: any) => {
     }
 
     // check email if user exists
-    const user = await TypeOrmConfig.getRepository(User).findOne({
-      where: { email },
-      select: { password },
-    });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return next(
         res.status(400).json({ success: false, message: "Invalid Credentials" })
@@ -207,8 +196,9 @@ export const login = async (req: any, res: any, next: any) => {
     }
 
     // match password
-    const passwordMatch = await user?.comparePassword(password);
+    const passwordMatch = await user.comparePassword(password);
     if (!passwordMatch) {
+      console.log(passwordMatch);
       return next(
         res.status(400).json({ success: false, message: "Invalid Credentials" })
       );
@@ -220,7 +210,6 @@ export const login = async (req: any, res: any, next: any) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 // ------------------------------ LOGOUT ----------------------------------------------
 

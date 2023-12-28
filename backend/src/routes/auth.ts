@@ -4,7 +4,7 @@ import {
   login,
   logout,
    register,
-} from "../controllers/auth.js";
+} from "../controllers/Auth/auth.js";
 import { is_authenticated } from "../middlewares/auth.js";
 const router = express.Router();
 

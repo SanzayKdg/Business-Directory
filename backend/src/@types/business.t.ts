@@ -1,3 +1,10 @@
+export enum BusinessAccountStatus {
+  PENDING = "pending",
+  APPROVED = "approved",
+  REJECTED = "rejected",
+  BANNED = "banned",
+}
+
 export type BusinessAmenities = {
   wifi: boolean;
   parking: boolean;

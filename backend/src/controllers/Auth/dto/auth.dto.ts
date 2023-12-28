@@ -11,7 +11,8 @@ import {
   MinLength,
 } from "class-validator";
 import { Transform } from "class-transformer";
-import { Gender, UserRole } from "../entity/user.entity.js";
+import { Gender, UserRole } from "../../../@types/user.t.js";
+
 export class CreateUserDto {
   @IsEmail()
   @Transform(({ value }) => value.toLowerCase())

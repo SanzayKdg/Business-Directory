@@ -14,10 +14,8 @@ export const BASE_URL = {
   backend: process.env.BACKEND_URL,
 };
 
-export const DATABSE = {
-  uri: process.env.DB_URI!,
-  database: process.env.DB_NAME!,
-};
+export const DATABASE_URI = process.env.DB_URI!
+
 
 export const OTP_EXPIRY = parseInt(process.env.OTP_EXPIRY!);
 
