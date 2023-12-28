@@ -1,15 +1,17 @@
 import {
+  IsDateString,
   IsEmail,
   IsEnum,
   IsIn,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from "class-validator";
 import { Transform } from "class-transformer";
-import { UserRole } from "../entity/user.entity.js";
+import { Gender, UserRole } from "../entity/user.entity.js";
 export class CreateUserDto {
   @IsEmail()
   @Transform(({ value }) => value.toLowerCase())
@@ -35,6 +37,39 @@ export class CreateUserDto {
   @MinLength(8)
   @IsNotEmpty()
   confirm_password!: string;
+}
+export class UpdateUserDto {
+  @IsEmail()
+  @Transform(({ value }) => value.toLowerCase())
+  @IsOptional()
+  email!: string;
+
+  @IsString()
+  @MinLength(3)
+  @IsOptional()
+  full_name!: string;
+
+  @IsEnum([UserRole.BUSINESS, UserRole.USER])
+  @IsIn([UserRole.BUSINESS, UserRole.USER])
+  @IsOptional()
+  phone_number!: string;
+
+  @IsDateString()
+  @IsOptional()
+  dob!: Date;
+
+  @IsOptional()
+  @IsEnum([Gender.MALE, Gender.FEMALE, Gender.OTHER])
+  @IsIn([Gender.MALE, Gender.FEMALE, Gender.OTHER])
+  gender!: Gender;
+
+  @IsString()
+  @IsOptional()
+  avatar!: string;
+
+  @IsString()
+  @IsOptional()
+  address!: string;
 }
 
 export class VerifyEmailDto {

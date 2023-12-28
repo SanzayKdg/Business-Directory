@@ -2,13 +2,14 @@ import { User } from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../@config/constants.config.js";
 import { TypeOrmConfig } from "../@config/typeorm.config.js";
+import { ObjectId } from "mongodb";
 
 export const is_authenticated = async (req: any, res: any, next: any) => {
   try {
     const { token } = req.cookies;
     const decoded_data: any = jwt.verify(token, JWT_SECRET);
     req.user = await TypeOrmConfig.getRepository(User).findOneBy({
-      id: decoded_data.id,
+      _id: new ObjectId(decoded_data.id),
     });
 
     next();

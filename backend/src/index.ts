@@ -1,14 +1,16 @@
 import express from "express";
-import { NODE_ENV, PORT } from "./@config/constants.config.js";
+import { PORT } from "./@config/constants.config.js";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { TypeOrmConfig } from "./@config/typeorm.config.js";
 import swaggerui from "swagger-ui-express";
 import specs from "./@config/swagger.config.js";
-import User from "./routes/User.js";
+import Auth from "./routes/auth.js";
+import Users from "./routes/users.js";
+
 import helmet from "helmet";
 import "reflect-metadata";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 const app = express();
 
 // ------------------------------ DATABASE CONNECTION ----------------------------------------------
@@ -19,19 +21,22 @@ TypeOrmConfig.initialize()
 // ------------------------------  MIDDLEWARES  ----------------------------------------------
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json())
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
 app.use(helmet());
 
 // ------------------------------ ROUTES ----------------------------------------------
-app.use("/user", User);
+app.use("/api/auth", Auth);
+app.use("/api/users", Users);
 
 // listener
 const server = app.listen(PORT, () => {
   console.log("Server is running on " + PORT);
 });
+
+// ------------------------------ ERRORS ----------------------------------------------
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {

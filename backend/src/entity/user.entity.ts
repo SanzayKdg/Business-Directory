@@ -27,7 +27,7 @@ export enum Gender {
 @Entity({ name: "user" })
 export class User {
   @ObjectIdColumn()
-  id!: ObjectId;
+  _id!: ObjectId;
 
   @Column()
   full_name!: string;
@@ -81,7 +81,7 @@ export class User {
 
   // JWT TOKEN
   getJWTToken() {
-    return jwt.sign({ id: this.id }, JWT_SECRET, {
+    return jwt.sign({ id: this._id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRE,
     });
   }

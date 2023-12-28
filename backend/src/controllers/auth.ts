@@ -4,9 +4,15 @@ import bcrypt from "bcryptjs";
 import { OTP_EXPIRY } from "../@config/constants.config.js";
 import { sendmail } from "../@helpers/sendmail.js";
 import { defualtMailTemplate } from "../@helpers/mailTemplate.js";
-import { CreateUserDto, LoginDto, VerifyEmailDto } from "../dtos/user.dto.js";
+import {
+  CreateUserDto,
+  LoginDto,
+  UpdateUserDto,
+  VerifyEmailDto,
+} from "../dtos/user.dto.js";
 import { validate } from "class-validator";
 import sendToken from "../@helpers/sendToken.js";
+import { NextFunction, Request, Response } from "express";
 
 // ---------------------- REGISTER ---------------------------------
 // /** *
@@ -99,9 +105,7 @@ export const register = async (req: any, res: any, next: any) => {
       user,
     });
   } catch (error: any) {
-    return next(
-      res.status(500).json({ success: false, message: error.message })
-    );
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -163,9 +167,7 @@ export const emailVerify = async (req: any, res: any, next: any) => {
       .status(200)
       .json({ success: true, message: "User verified successfully." });
   } catch (error: any) {
-    return next(
-      res.status(500).json({ success: false, message: error.message })
-    );
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -198,7 +200,7 @@ export const login = async (req: any, res: any, next: any) => {
       where: { email },
       select: { password },
     });
-    if (!email) {
+    if (!user) {
       return next(
         res.status(400).json({ success: false, message: "Invalid Credentials" })
       );
@@ -215,8 +217,26 @@ export const login = async (req: any, res: any, next: any) => {
     // if both matches send token to user
     sendToken(user, 200, res, "Login Success");
   } catch (error: any) {
-    return next(
-      res.status(500).json({ success: false, message: error.message })
-    );
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+// ------------------------------ LOGOUT ----------------------------------------------
+
+export const logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
