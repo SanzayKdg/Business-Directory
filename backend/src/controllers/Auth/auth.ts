@@ -49,9 +49,7 @@ export const register = async (req: any, res: any, next: any) => {
     }
 
     // check if user with same email exists
-    const email_exists = await User.findOne({
-      where: { email },
-    });
+    const email_exists = await User.findOne({ email });
 
     if (email_exists) {
       return next(
@@ -129,9 +127,7 @@ export const emailVerify = async (req: any, res: any, next: any) => {
     }
 
     // check if user with email exists
-    const user = await User.findOne({
-      where: { email },
-    });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return next(

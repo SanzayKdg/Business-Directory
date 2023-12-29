@@ -1,5 +1,28 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+// import { Type } from "class-transformer";
+import {
+  IsArray,
+  IsLatitude,
+  IsLongitude,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+  MinLength,
+  ValidateNested,
+} from "class-validator";
+import {
+  BusinessAmenities,
+  BusinessTimings,
+} from "../../../@types/business.t.js";
 
+export class SocialLinksDTO {
+  @IsString()
+  name!: string;
+
+  @IsUrl()
+  url!: string;
+}
 export class RegisterBusinessDTO {
   @IsString()
   @IsNotEmpty()
@@ -9,41 +32,56 @@ export class RegisterBusinessDTO {
   @IsNotEmpty()
   description!: string;
 
-  @IsString()
   @IsNotEmpty()
-  logo!: string;
+  logo!: any;
+
+  @IsNotEmpty()
+  @IsArray()
+  image!: any[];
 
   @IsString()
-  
-  image!: string;
-
-  @IsString()
+  @MaxLength(10)
+  @MinLength(10)
   phone_number!: string;
 
   @IsString()
+  @IsOptional()
   telephone!: string;
 
   @IsString()
+  @IsNotEmpty()
   vat_number!: string;
 
   @IsString()
-  website!: string;
+  @IsOptional()
+  website?: string;
 
   @IsString()
+  @IsNotEmpty()
   category!: string;
 
-  @IsString()
-  opening_hours!: string;
+  @IsOptional()
+  @ValidateNested()
+  // @Type(() => BusinessTimings)
+  opening_hours!: BusinessTimings;
+
+  @IsOptional()
+  @ValidateNested()
+  // @Type(() => BusinessAmenities)
+  amenity?: BusinessAmenities;
+
+  @IsOptional()
+  @IsArray()
+  // @Type(() => SocialLinksDTO)
+  social_links?: SocialLinksDTO[];
 
   @IsString()
-  amenitiy!: string;
-
-  @IsString()
-  social_links!: string;
-
-  @IsString()
-  account_status!: string;
-
-  @IsString()
+  @IsNotEmpty()
   address!: string;
+
+  @IsLatitude()
+  latitude!: number;
+
+  @IsLongitude()
+  longitude!: number;
 }

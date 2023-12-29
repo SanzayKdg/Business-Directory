@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.js";
 import {
   BusinessAccountStatus,
   BusinessAmenities,
@@ -9,17 +8,17 @@ import { Point } from "geojson";
 
 interface BusinessDocument extends Document {
   opening_hours: BusinessTimings;
-  amenitiy: BusinessAmenities;
+  amenity: BusinessAmenities;
   name: string;
   description: string;
-  logo: string;
-  image: string[];
+  logo: any;
+  image: any[];
   phone_number: string;
   telephone: string;
   vat_number: string;
   website: string;
   category: string;
-  social_links: string[];
+  social_links: [{ name: string; url: string }];
   account_status: BusinessAccountStatus;
   business_location: Point;
   address: string;
@@ -73,7 +72,7 @@ const businessSchema = new mongoose.Schema(
       type: Schema.Types.Mixed,
       default: {},
     },
-    amenitiy: {
+    amenity: {
       type: Schema.Types.Mixed,
       default: {},
     },
@@ -135,7 +134,6 @@ const businessSchema = new mongoose.Schema(
 
   {
     timestamps: true,
-    unique: [true, "One email can be used for one business only."],
   }
 );
 
