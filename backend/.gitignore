@@ -4,4 +4,4 @@
 
 .env
 
-/src/uploads
+./src/uploads
