@@ -1,4 +1,3 @@
-import { Type } from "class-transformer";
 import {
   IsArray,
   IsLatitude,
@@ -62,17 +61,14 @@ export class RegisterBusinessDTO {
 
   @IsOptional()
   @ValidateNested()
-  // @Type(() => BusinessTimings)
   opening_hours!: BusinessTimings;
 
   @IsOptional()
   @ValidateNested()
-  // @Type(() => BusinessAmenities)
   amenity?: BusinessAmenities[];
 
   @IsOptional()
   @IsArray()
-  // @Type(() => SocialLinksDTO)
   social_links?: SocialLinksDTO[];
 
   @IsString()

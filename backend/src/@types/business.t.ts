@@ -1,3 +1,5 @@
+import { IsBooleanString } from "class-validator";
+
 export enum BusinessAccountStatus {
   PENDING = "pending",
   APPROVED = "approved",
@@ -5,16 +7,12 @@ export enum BusinessAccountStatus {
   BANNED = "banned",
 }
 
-export class SocialLinks {
-  name!: string;
-  url!: string;
-}
-export class BusinessAmenities {
-  wifi!: boolean;
-  parking!: boolean;
-  accept_card!: boolean;
-  delivery!: boolean;
-}
+export type BusinessAmenities = {
+  wifi: boolean;
+  parking: boolean;
+  accept_card: boolean;
+  delivery: boolean;
+};
 
 export class BusinessTimings {
   sunday?: [

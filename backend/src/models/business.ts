@@ -3,7 +3,6 @@ import {
   BusinessAccountStatus,
   BusinessAmenities,
   BusinessTimings,
-  SocialLinks,
 } from "../@types/business.t.js";
 import { Point } from "geojson";
 
@@ -19,7 +18,7 @@ interface BusinessDocument extends Document {
   vat_number: string;
   website: string;
   category: string;
-  social_links: SocialLinks[];
+  social_links: string[];
   account_status: BusinessAccountStatus;
   business_location: Point;
   address: string;
@@ -75,15 +74,13 @@ const businessSchema = new mongoose.Schema<BusinessDocument>(
       type: Schema.Types.Mixed,
       default: {},
     },
-    amenity: [
-      {
-        type: Schema.Types.Mixed,
-        default: {},
-      },
-    ],
+    amenity: {
+      type: Schema.Types.Mixed,
+      default: {},
+    },
     social_links: [
       {
-        type: Schema.Types.Mixed,
+        type: String,
         default: [],
       },
     ],
