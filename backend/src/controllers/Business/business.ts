@@ -23,18 +23,14 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
       longitude,
     } = req.body;
 
-    // Single Image
-    const logo = req.files;
-    if (logo) {
-      return logo.filename;
-    }
-    // Multiple Images
-    const image = [];
-    image.push(req.files);
+    // Handle Single Image
+    const logo = req.files["logo"][0].path;
+    let image: any = [];
 
-    if (image) {
-      return image.map((item) => item.filename);
-    }
+    // Handle Multiple Image
+    const images = req.files["image"];
+    images.forEach((item: any) => image.push(item.path));
+
     const payload = new RegisterBusinessDTO();
     payload.name = name;
     payload.description = description;
@@ -90,6 +86,7 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
     };
 
     // save business
+
     const new_business = await Business.create({
       name,
       description,

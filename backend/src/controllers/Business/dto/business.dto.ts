@@ -1,4 +1,4 @@
-// import { Type } from "class-transformer";
+import { Type } from "class-transformer";
 import {
   IsArray,
   IsLatitude,
@@ -68,7 +68,7 @@ export class RegisterBusinessDTO {
   @IsOptional()
   @ValidateNested()
   // @Type(() => BusinessAmenities)
-  amenity?: BusinessAmenities;
+  amenity?: BusinessAmenities[];
 
   @IsOptional()
   @IsArray()

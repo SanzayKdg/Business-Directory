@@ -18,11 +18,17 @@ const storage = multer.diskStorage({
   filename(req, file, callback) {
     // saving file with unique id instead of original name
     const id = uuid();
-
     // splitting original name and extension name
     const extName = file.originalname.split(".").pop();
     callback(null, `${id}.${extName}`);
   },
 });
 
-export const uploads = multer({ storage });
+export const profileUpload = multer({ storage }).single("avatar");
+
+export const multipleUploads = multer({ storage }).array("images", 5);
+
+export const upload = multer({ storage }).fields([
+  { name: "logo", maxCount: 1 },
+  { name: "image", maxCount: 5 },
+]);

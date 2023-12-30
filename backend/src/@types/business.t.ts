@@ -1,5 +1,3 @@
-import { IsBooleanString } from "class-validator";
-
 export enum BusinessAccountStatus {
   PENDING = "pending",
   APPROVED = "approved",
@@ -7,20 +5,17 @@ export enum BusinessAccountStatus {
   BANNED = "banned",
 }
 
+export class SocialLinks {
+  name!: string;
+  url!: string;
+}
 export class BusinessAmenities {
-  @IsBooleanString()
   wifi!: boolean;
-
-  @IsBooleanString()
   parking!: boolean;
-
-  @IsBooleanString()
   accept_card!: boolean;
-
-  @IsBooleanString()
   delivery!: boolean;
 }
- 
+
 export class BusinessTimings {
   sunday?: [
     {
@@ -65,5 +60,3 @@ export class BusinessTimings {
     }
   ];
 }
-
-
