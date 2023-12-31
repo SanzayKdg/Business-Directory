@@ -14,7 +14,8 @@ export const is_authenticated = async (req: any, res: any, next: any) => {
     return next(
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: "Please login first.",
+        error: error.message,
       })
     );
   }

@@ -24,9 +24,9 @@ const storage = multer.diskStorage({
   },
 });
 
-export const profileUpload = multer({ storage }).single("avatar");
+export const avatarUpload = multer({ storage }).single("avatar");
 
-export const multipleUploads = multer({ storage }).array("images", 5);
+// export const multipleUploads = multer({ storage }).array("images", 5);
 
 export const upload = multer({ storage }).fields([
   { name: "logo", maxCount: 1 },
