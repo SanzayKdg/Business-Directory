@@ -12,7 +12,7 @@ const Header = () => {
       />
       <div className="header__contents">
         <div className="header__left">
-          <Avatar src="/logo/logo512.svg" size="md" className="" name="Logo" />
+          <Avatar src="/logo/logo512.svg" size="lg" className="" name="Logo" />
         </div>
         <div className="header__mid">
           <ul className="nav__items">
@@ -45,11 +45,11 @@ const Header = () => {
         </div>
         <div className="header__right">
           <Button colorScheme="red" className="header__cta__btns">
-            <Link to={"/"}>Add Listing +</Link>
+            <Link className="add_listing__link" to={"/"}>Add Listing +</Link>
           </Button>
-          <Button className="header__cta__btns" colorScheme="whiteAlpha">
+          {/* <Button style={{marginLeft: "1rem"}} className="header__cta__btns" colorScheme="whiteAlpha">
             <Link to={"/"}>Sign In</Link>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 .header__container {
     z-index: -1;
+    
 }
 
 .background__image {
@@ -7,13 +8,13 @@
 }
 
 .header__contents {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: absolute;
     top: 0;
-    width: 100%;
-    padding: 1rem 8rem;
+    padding: 2rem 8rem;
 }
 
 .header__logo {
@@ -23,6 +24,8 @@
 
 .header__mid {
     width: 35rem;
+    display: flex;
+    justify-content: center;
 }
 
 .nav__items {
@@ -37,11 +40,13 @@
     padding: 10px 1.5rem;
     border-radius: 6px;
 }
-.nav__link {
+.nav__link,  .add_listing__link{
     color: #fff;
     font-family: var(--base-font-family);
     font-size: var(--p-font-size);
+    font-weight: var(--base-font-weight);
     text-align: center;
+    line-height: var(--p-line-height);
 }
 
 
@@ -49,14 +54,6 @@
 background-color: rgba(255, 255, 255, 0.24);
 }
 
-.header__right {
-    display: flex;
-    justify-content: space-between;
-    width: 18rem;
-}
 .header__cta__btns{
     padding: 1.5rem 2rem !important;
-}
-.addlisting__btn{
-    background-color: var(--error)!important;
 }

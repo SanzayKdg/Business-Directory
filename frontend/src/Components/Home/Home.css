@@ -1,0 +1,76 @@
+.home__container {
+    border: 2px solid red;
+    position: absolute;
+    top: 20rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 16rem;
+    height: 100%;
+}
+
+.home__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.home__heading {
+    font-size: var(--h1-font-size);
+    line-height: (--h1-line-height);
+    font-weight: bold;
+    color: #FFF;
+    text-align: center;
+}
+
+.home__description {
+    color: #FFF;
+    font-size: var(--p-font-size);
+    line-height: (--p-line-height);
+    font-weight: (--base-font-weight);
+}
+
+.home__bottom {
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+    justify-content: center;
+    padding: 2rem 3rem;
+}
+
+.home__form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home__form__input {
+    border-radius: 0;
+}
+
+.home__search__btn {
+    margin-left: 2rem;
+    padding: 1.5rem 2rem !important;
+
+}
+
+.form__divider {
+    background-color: #a8a8a8b3;
+    width: 1px;
+    height: 3rem;
+    margin: 0 1rem;
+}
+
+.location__form__item {
+    display: flex;
+    align-items: center;
+}
+
+.home__location {
+    width: 1.5rem;
+    height: 1.5rem;
+}
