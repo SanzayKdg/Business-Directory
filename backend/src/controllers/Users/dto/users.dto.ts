@@ -51,7 +51,12 @@ export class UpdatePasswordDTO {
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
-  password!: string;
+  old_password!: string;
+
+  @IsString()
+  @MinLength(8)
+  @IsNotEmpty()
+  new_password!: string;
 
   @IsString()
   @MinLength(8)

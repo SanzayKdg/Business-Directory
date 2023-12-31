@@ -1,8 +1,11 @@
 import { User } from "../../models/user.js";
 import sendToken from "../../@helpers/sendToken.js";
-import { UpdateProfileDTO } from "./dto/users.dto.js";
+import { UpdatePasswordDTO, UpdateProfileDTO } from "./dto/users.dto.js";
 import { validate } from "class-validator";
 import * as fs from "fs";
+import { sendmail } from "../../@helpers/sendmail.js";
+import { defualtMailTemplate } from "../../@helpers/mailTemplate.js";
+import { OTP_EXPIRY } from "../../@config/constants.config.js";
 // ------------------------------ GET MY PROFILE ----------------------------------------------
 export const profile = async (req: any, res: any, next: any) => {
   try {
@@ -70,6 +73,7 @@ export const updateProfile = async (req: any, res: any, next: any) => {
         res.status(400).json({ success: false, message: validation_error })
       );
     }
+
     const updated_user = {
       email,
       full_name,
@@ -81,11 +85,30 @@ export const updateProfile = async (req: any, res: any, next: any) => {
       updatedAt: Date.now(),
     };
 
+    if (email && payload.email) {
+      user.otp = Math.floor(Math.random() * 100000);
+      user.otp_expiry = new Date(Date.now() + OTP_EXPIRY * 60 * 1000);
+      user.is_verified = false;
+
+      sendmail({
+        to: user.email,
+        subject: "Email verification",
+        html: defualtMailTemplate({
+          title: "Email Verification",
+          name: user.full_name,
+          message: `Your OTP is ${user.otp}`,
+        }),
+      });
+
+      await user.save();
+    }
+
     await User.findByIdAndUpdate(req.user._id, updated_user, {
       new: true,
       runValidators: true,
       useFindAndModify: false,
     });
+
     res
       .status(200)
       .json({ success: true, message: "Account Updated Successfully." });
@@ -94,11 +117,80 @@ export const updateProfile = async (req: any, res: any, next: any) => {
   }
 };
 
+// ------------------------------ UPDATE PASSWORD ----------------------------------------------
+export const updatePassword = async (req: any, res: any, next: any) => {
+  try {
+    const { old_password, new_password, confirm_password } = req.body;
+    // check if user exists
+    const user: any = await User.findById({ _id: req.user._id }).select(
+      "+password"
+    );
+
+    // Validation
+
+    const payload = new UpdatePasswordDTO();
+    payload.old_password = old_password;
+    payload.confirm_password = confirm_password;
+    payload.new_password = confirm_password;
+
+    const errors = await validate(payload);
+
+    if (errors.length > 0) {
+      const validation_error = errors.reduce((acc: any, error) => {
+        // Destructuring error object and getting property and constraints
+        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
+        const { property, constraints } = error;
+        acc[property] = Object.values(constraints || {});
+        return acc;
+      }, {});
+
+      return next(
+        res.status(400).json({ success: false, message: validation_error })
+      );
+    }
+
+    // match password
+    const passwordMatch = await user.comparePassword(old_password);
+    if (!passwordMatch) {
+      console.log(passwordMatch);
+      return next(
+        res
+          .status(400)
+          .json({ success: false, message: "Password didn't Matched" })
+      );
+    }
+
+    if (new_password !== confirm_password) {
+      return next(
+        res
+          .status(400)
+          .json({ success: false, message: "Password didn't Matched" })
+      );
+    }
+
+    // update password
+    user.password = new_password;
+    user.updatedAt = Date.now();
+    await user.save();
+
+    // delete cookie
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully." });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 // ------------------------------ DELETE PROFILE ----------------------------------------------
 export const deleteProfile = async (req: any, res: any, next: any) => {
   try {
     // check if user exists or is logged in
-    const user = req.user;
+    const user = await User.findById({ _id: req.user._id });
     if (!user) {
       return next(
         res.status(400).json({
@@ -108,6 +200,10 @@ export const deleteProfile = async (req: any, res: any, next: any) => {
       );
     }
 
+    // Delete Avatar
+    if (user.avatar && user.avatar.length > 0) {
+      fs.unlinkSync(user.avatar);
+    }
     // delete account
     await User.findByIdAndDelete({ _id: user._id });
 
