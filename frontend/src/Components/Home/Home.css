@@ -1,5 +1,4 @@
 .home__container {
-    border: 2px solid red;
     position: absolute;
     top: 20rem;
     width: 100%;
@@ -8,7 +7,6 @@
     align-items: center;
     gap: 2rem;
     padding: 0 16rem;
-    height: 100%;
 }
 
 .home__top {
@@ -19,21 +17,15 @@
 }
 
 .home__heading {
-    font-size: var(--h1-font-size);
-    line-height: (--h1-line-height);
-    font-weight: bold;
-    color: #FFF;
+    color: #fff;
     text-align: center;
 }
 
 .home__description {
-    color: #FFF;
-    font-size: var(--p-font-size);
-    line-height: (--p-line-height);
-    font-weight: (--base-font-weight);
+    color: #fff;
 }
 
-.home__bottom {
+.home__mid {
     display: flex;
     width: 100%;
     background-color: #fff;
@@ -54,8 +46,7 @@
 
 .home__search__btn {
     margin-left: 2rem;
-    padding: 1.5rem 2rem !important;
-
+    padding: 1.5rem 2.5rem !important;
 }
 
 .form__divider {
@@ -73,4 +64,97 @@
 .home__location {
     width: 1.5rem;
     height: 1.5rem;
+}
+
+.home__filter {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.home__popular__categories {
+    margin-top: 32rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popular__categories__mid {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.category__card {
+    background-color: var(--black-5);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    width: 11rem;
+}
+
+.category__description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.category__card:hover .popular__category__icon {
+    filter: invert(1);
+}
+
+.category__card:hover {
+    background-color: var(--black-50);
+    color: white;
+}
+
+.category__card {
+    transition: background-color 0.3s, color 0.3s;
+    color: var(--black-75);
+}
+
+.popular__category__icon {
+    width: 50px;
+    height: 50px;
+    filter: invert(.40);
+}
+
+.p__text {
+    font-family: var(--base-font-family);
+    font-size: var(--p-font-size);
+    line-height: var(--p-line-height);
+    font-weight: var(--base-font-weight);
+    font-weight: var(--base-font-weight);
+}
+
+.h1__text {
+    font-family: var(--base-font-family);
+    font-size: var(--h1-font-size);
+    line-height: var(--h1-line-height);
+    font-weight: bold;
+}
+
+.black__text {
+    color: var(--black);
+}
+
+.listing__number {
+    font-size: 14px;
+}
+
+.light__text {
+    color: var(--light);
+}
+
+.category__name {
+    font-size: 14px;
 }

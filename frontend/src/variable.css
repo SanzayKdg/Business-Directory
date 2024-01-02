@@ -8,7 +8,7 @@
     --black-10: rgb(38, 31, 34, .10);
     --black-5: rgb(38, 31, 34, .05);
     --error: #FA2D2D;
-
+    --light: #ffff;
     /* ------------------------------ font family ------------------------------ */
     --base-font-family: 'Rubik', sans-serif;
     /* --heading-font-family: 'Roboto Condensed', sans-serif; */
@@ -84,4 +84,7 @@
 
     --mobile-h1-font-size: 55px;
     --mobile-h1-line-height: 78px;
+
+    
 }
+
