@@ -1,64 +1,101 @@
 import { Button, Image, Input, Select } from "@chakra-ui/react";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaPhoneAlt, FaSearch } from "react-icons/fa";
+import StarRating from "react-star-ratings";
 const Home = () => {
-  // const [categoryCard, setCategoryCard] = useState("");
   const business__categories = [
     {
+      name: "Chinese Sausage Restaurant",
+      ratings: 5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Restaurant",
       is__popular: true,
-      dark__img: "/icons/restaurant.svg",
-      light__img: "/icons/restaurant_light.svg",
+      img: "/icons/restaurant.svg",
       listings: 69,
+      open_status: false,
     },
     {
+      name: "Woozie Chinese Restaurant",
+      ratings: 5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Shopping",
       is__popular: true,
-      dark__img: "/icons/bag.svg",
-      light__img: "/icons/bag_light.svg",
+      img: "/icons/bag.svg",
+
       listings: 69,
+      open_status: true,
     },
     {
+      name: "Ryder Hair Salon Restaurant",
+      ratings: 1.5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Beauty",
       is__popular: true,
-      dark__img: "/icons/leaf.svg",
-      light__img: "/icons/leaf__light.svg",
+      img: "/icons/leaf.svg",
+
       listings: 69,
+      open_status: false,
     },
     {
+      name: "Big Smoke Taco Bell",
+      ratings: 2.5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Automobiles",
       is__popular: false,
-      dark__img: "/icons/restaurant.svg",
-      light__img: "/icons/restaurant.svg",
+      img: "/icons/restaurant.svg",
+
       listings: 69,
+      open_status: true,
     },
     {
+      name: "Sweet Tatto Parlor",
+      ratings: 4.5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Real Estate",
       is__popular: false,
-      dark__img: "/icons/restaurant.svg",
-      light__img: "/icons/restaurant.svg",
+      img: "/icons/restaurant.svg",
+
       listings: 69,
+      open_status: false,
     },
     {
+      name: "Cesar Car Center",
+      ratings: 3.5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Hotels",
       is__popular: true,
-      dark__img: "/icons/bed.svg",
-      light__img: "/icons/bed_light.svg",
+      img: "/icons/bed.svg",
+
       listings: 69,
+      open_status: true,
     },
     {
+      name: "Carl Casino Restaurant",
+      ratings: 3.5,
+      logo: "/logo/logo512.svg",
+      image: ["/background/list.jpg"],
       category: "Bars & Pubs",
       is__popular: true,
-      dark__img: "/icons/wine.svg",
-      light__img: "/icons/wine_light.svg",
+      img: "/icons/wine.svg",
+
       listings: 69,
+      open_status: false,
     },
   ];
 
   const popular__categories = business__categories.filter(
     (category) => category.is__popular
   );
+
+  const most__searched = business__categories.slice(0, 6);
 
   // const handleMouseEnter = (index: number) => {
   //   const newActiveCategory = [...categoryCard];
@@ -87,7 +124,7 @@ const Home = () => {
               className="home__form__input p__text"
               border="hidden"
               type="email"
-              width="400px"
+              width="380px"
               placeholder="What are you Looking for?"
             />
           </div>
@@ -100,11 +137,7 @@ const Home = () => {
               type="text"
               placeholder="Location"
             />
-            <Image
-              alt="Location Icon"
-              className="home__location"
-              src="/icons/location.svg"
-            />
+            <FaLocationDot size={20} className="service__icon" />
           </div>
           <div className="form__divider"></div>
 
@@ -132,7 +165,9 @@ const Home = () => {
           </div>
 
           <Button className="home__search__btn" colorScheme="red">
-            <p className="p__text">Search</p>
+            <p className="p__text search__icon">
+              Search <FaSearch size={18} />
+            </p>
           </Button>
         </form>
       </div>
@@ -155,10 +190,10 @@ const Home = () => {
 
       <div className="home__popular__categories">
         <div className="popular__categories__top">
-          <h1 className="home__heading black__text h1__text">
+          <h1 className="text__center black__text h1__text">
             Most Popular Categories
           </h1>
-          <h4 className="home__description black__text p__text">
+          <h4 className="text__center p__text black__text ">
             Travelocity empowers travelers who are giving back on their trips in
             ways big and small
           </h4>
@@ -167,51 +202,12 @@ const Home = () => {
         <div className="popular__categories__mid">
           {popular__categories &&
             popular__categories.map((item, index) => (
-              // <Link
-              //   key={index}
-              //   onMouseEnter={() => handleMouseEnter(index)}
-              //   onMouseLeave={handleMouseLeave}
-              //   to={"/"}
-              //   className={`category__card ${
-              //     categoryCard[index] ? "category__card__hover" : ""
-              //   }`}
-              // >
-              //   <div className="category__icon">
-              //     <Image
-              //       alt="Location Icon"
-              //       className="popular__category__icon"
-              //       src={`${categoryCard[index] ? item.light__img : item.dark__img}`}
-              //     />
-              //   </div>
-              //   <div className="category__description">
-              //     <p
-              //       className={`category__name p__text ${
-              //         categoryCard[index] ? "light__text" : ""
-              //       } `}
-              //     >
-              //       <b>{item.category.toUpperCase()}</b>
-              //     </p>
-              //     <p
-              //       className={`listing__number p__text ${
-              //         categoryCard[index] ? "light__text" : ""
-              //       }`}
-              //     >
-              //       {item.listings} Listings
-              //     </p>
-              //   </div>
-              // </Link>
-
-              <Link
-                key={index}
-           
-                to={"/"}
-                className={`category__card`}
-              >
+              <Link key={index} to={"/"} className={`category__card`}>
                 <div className="category__icon">
                   <Image
                     alt="Location Icon"
                     className="popular__category__icon"
-                    src={`${item.dark__img}`}
+                    src={`${item.img}`}
                   />
                 </div>
 
@@ -227,6 +223,95 @@ const Home = () => {
             ))}
         </div>
         <div className="popular__categories__bottom"></div>
+      </div>
+
+      <div className="home__services">
+        <div className="home__services__top">
+          <h1 className="black__text h1__text text__center">
+            Most Searched Services
+          </h1>
+          <h4 className="black__text p__text text__center">
+            Travelocity empowers travelers who are giving back on their trips in
+            ways big and small
+          </h4>
+        </div>
+
+        <div className="home__services__link">
+          <ul className="filter__services__items">
+            {most__searched &&
+              most__searched.map((item) => (
+                <li className="p__text" key={item.category}>
+                  <Link to="/">{item.category}</Link>
+                </li>
+              ))}
+          </ul>
+
+          <div className="home__services__container">
+            {most__searched &&
+              most__searched.map((item, index) => (
+                <Link key={index} to={"/"} className="services__card">
+                  {/* 
+                  top--image
+                      mid-- logo, name, ratings, location, phone number
+                      bottom -- category, open status
+                  */}
+                  <div className="services__top">
+                    <Image
+                      className="service__background"
+                      src={item.image[0]}
+                      alt="Business Image"
+                    />
+                  </div>
+
+                  <div className="services__logo">
+                    <Image className="service__logo" src={item.logo} />
+                  </div>
+
+                  <div className="services__mid">
+                    <div className="service__details">
+                      <p className="p__text business__name">
+                        <b>{item.name}</b>
+                      </p>
+                      <div className="ratings">
+                        <StarRating
+                          rating={item.ratings}
+                          starRatedColor="#f6c914"
+                          starDimension="18px"
+                          starSpacing="1px"
+                        />
+                      </div>
+                      <div className="home__service__contact">
+                        <div className="service__location">
+                          <FaLocationDot size={24} className="service__icon" />
+                          <p className="service__address">
+                            236 Littleton St. New Philadelphia, Ohio, United
+                            States
+                          </p>
+                        </div>
+                        <div className="service__phone">
+                          <FaPhoneAlt size={18} className="service__icon" />
+                          <p className="service__address">(+12) 345-678-910</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="services__bottom">
+                    <p className="service__category p__text">
+                      <b>Restaurant</b>
+                    </p>
+
+                    <p
+                      className={`service__open__status p__text ${
+                        item.open_status ? "green__text" : "red__text"
+                      } `}
+                    >
+                      <b>{item.open_status ? "Open" : "Closed"}</b>
+                    </p>
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

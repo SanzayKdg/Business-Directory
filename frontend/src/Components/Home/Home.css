@@ -61,6 +61,11 @@
     align-items: center;
 }
 
+.search__icon{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .home__location {
     width: 1.5rem;
     height: 1.5rem;
@@ -82,11 +87,16 @@
     align-items: center;
 }
 
+.popular__categories__top{
+    width: 100%;
+
+}
 .popular__categories__mid {
     margin-top: 2rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    
 }
 
 .category__card {
@@ -128,33 +138,88 @@
     filter: invert(.40);
 }
 
-.p__text {
-    font-family: var(--base-font-family);
-    font-size: var(--p-font-size);
-    line-height: var(--p-line-height);
-    font-weight: var(--base-font-weight);
-    font-weight: var(--base-font-weight);
+
+.home__services{
+    width: 100%;
+    margin-top: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.h1__text {
-    font-family: var(--base-font-family);
-    font-size: var(--h1-font-size);
-    line-height: var(--h1-line-height);
-    font-weight: bold;
+.home__services__link{
+    width: 100%;
+}
+.filter__services__items{
+    margin-top: 1rem;
+    padding: 1.5rem 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    list-style: none;
+    border-bottom: 1px solid #a8a8a8;
+}
+.home__services__container{
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    place-items: center;    
+    gap: 2rem;
+}
+.services__card{
+    border-radius: 10px;
+    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
 }
 
-.black__text {
-    color: var(--black);
+.service__background{
+    border-radius: 10px 10px 0 0;
 }
 
-.listing__number {
+
+.services__logo{
+    position: relative;
+    bottom:2.5rem;
+    width: 100%;
+    padding: 0 2rem;
+    margin-bottom: -2rem;
+}
+.service__logo{
+    width: 4rem;
+}
+
+.business__name{
+    font-size: 18px;
+}
+.services__mid{
+    padding: 0 1.5rem;
+}
+.service__location{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.service__icon{
+    color: var(--black-75);
+    margin-right: 10px;
+}
+.service__address{
     font-size: 14px;
+    font-family: var(--base-font-family);
+    font-weight: var(--base-font-weight);
 }
 
-.light__text {
-    color: var(--light);
+.service__phone{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
 }
 
-.category__name {
-    font-size: 14px;
+
+.services__bottom{
+    margin-top: 1rem;
+    border-top: 1px solid var(--black-25);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 2rem;
 }
