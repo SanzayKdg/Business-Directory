@@ -4,7 +4,9 @@ import "./Home.css";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt, FaSearch } from "react-icons/fa";
 import StarRating from "react-star-ratings";
+import { useState } from "react";
 const Home = () => {
+  const [activeCategory, setActiveCategory] = useState("");
   const business__categories = [
     {
       name: "Chinese Sausage Restaurant",
@@ -97,16 +99,9 @@ const Home = () => {
 
   const most__searched = business__categories.slice(0, 6);
 
-  // const handleMouseEnter = (index: number) => {
-  //   const newActiveCategory = [...categoryCard];
-  //   newActiveCategory[index] = true;
-  //   setCategoryCard(newActiveCategory);
-  // };
-  // const handleMouseLeave = () => {
-  //   setCategoryCard(Array(popular__categories.length).fill(false));
-  // };
   return (
     <div className="home__container">
+      {/* ---------------------- HOME - FORM  ------------------------------------- */}
       <div className="home__top">
         <h1 className="home__heading h1__text">
           Discover The Best Services Near You
@@ -188,6 +183,8 @@ const Home = () => {
           ))}
       </div>
 
+      {/* ---------------------- HOME - POPULAR CATEGORIES  ------------------------------------- */}
+
       <div className="home__popular__categories">
         <div className="popular__categories__top">
           <h1 className="text__center black__text h1__text">
@@ -225,6 +222,8 @@ const Home = () => {
         <div className="popular__categories__bottom"></div>
       </div>
 
+      {/* ---------------------- HOME - MOST SEARCHED CATEGORIES / SERVICES  ------------------------------------- */}
+
       <div className="home__services">
         <div className="home__services__top">
           <h1 className="black__text h1__text text__center">
@@ -240,8 +239,14 @@ const Home = () => {
           <ul className="filter__services__items">
             {most__searched &&
               most__searched.map((item) => (
-                <li className="p__text" key={item.category}>
-                  <Link to="/">{item.category}</Link>
+                <li
+                  className={`p__text filter__category ${
+                    item.category === activeCategory ? "active__category" : ""
+                  }`}
+                  onClick={() => setActiveCategory(item.category)}
+                  key={item.category}
+                >
+                  <p className="p__text">{item.category}</p>
                 </li>
               ))}
           </ul>
@@ -250,11 +255,6 @@ const Home = () => {
             {most__searched &&
               most__searched.map((item, index) => (
                 <Link key={index} to={"/"} className="services__card">
-                  {/* 
-                  top--image
-                      mid-- logo, name, ratings, location, phone number
-                      bottom -- category, open status
-                  */}
                   <div className="services__top">
                     <Image
                       className="service__background"
@@ -310,6 +310,110 @@ const Home = () => {
                   </div>
                 </Link>
               ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ---------------------- HOME - HOW IT WORKS  ------------------------------------- */}
+      <div className="home__works__description">
+        <div className="home__works__top">
+          <h1 className="black__text h1__text text__center">
+            How Does It Work
+          </h1>
+          <h4 className="black__text p__text text__center">
+            Travelocity empowers travelers who are giving back on their trips in
+            ways big and small
+          </h4>
+        </div>
+
+        <div className="home__works__bottom">
+          <div className="work__cards">
+            <div className="work__card__top">
+              <Image src="/icons/work1.svg" className="works__image" />
+            </div>
+            <div className="work__card__bottom">
+              <h6 className="p__text">
+                <b>1. Choose a Category</b>
+              </h6>
+              <p className="p__text works__details">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore.
+              </p>
+            </div>
+          </div>
+          <div className="work__cards">
+            <div className="work__card__top">
+              <Image src="/icons/work2.svg" className="works__image" />
+            </div>
+            <div className="work__card__bottom">
+              <h6 className="p__text">
+                <b>2. What You Want</b>
+              </h6>
+              <p className="p__text works__details">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore.
+              </p>
+            </div>
+          </div>
+          <div className="work__cards">
+            <div className="work__card__top">
+              <Image src="/icons/work3.svg" className="works__image" />
+            </div>
+            <div className="work__card__bottom">
+              <h6 className="p__text">
+                <b>3. Go Out & Explore</b>
+              </h6>
+              <p className="p__text works__details">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="featured__location">
+        <div className="featured__location__top">
+          <h1 className="black__text h1__text text__center">
+            Top Featured Location
+          </h1>
+          <h4 className="black__text p__text text__center">
+            Explore restaurants, bars, and cafés by locality
+          </h4>
+        </div>
+        <div className="featured__location__bottom">
+          <Link to={"/"} className="featured__location__left location__link">
+            <Image className="left__location" src="/background/ktm3.jpg" />
+            <p className="p__text light__text location__name">
+              Kathmandu<span className="location__listing">69 Listings</span>
+            </p>
+          </Link>
+          <div className="featured__location__right">
+            <div className="location__right__top">
+              <Link to={"/"} className="location__link">
+                <Image className="right__location" src="/background/ltp.jpg" />
+                <p className="p__text light__text location__name">
+                  Lalitpur
+                  <span className="location__listing">69 Listings</span>
+                </p>
+              </Link>
+              <Link to={"/"} className="location__link">
+                <Image className="right__location" src="/background/bkt.jpg" />
+                <p className="p__text light__text location__name">
+                  Bhaktapur
+                  <span className="location__listing">69 Listings</span>
+                </p>
+              </Link>
+            </div>
+            <Link to="/" className="location__right__bottom location__link">
+              <Image
+                className="right__bottom__location"
+                src="/background/pkh.jpg"
+              />
+              <p className="p__text light__text location__name">
+                Pokhara<span className="location__listing">69 Listings</span>
+              </p>
+            </Link>
           </div>
         </div>
       </div>
