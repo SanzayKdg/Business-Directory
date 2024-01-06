@@ -1,0 +1,95 @@
+.our__reviews {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.quote__img {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.user__reviews {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.nav__icons {
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 50%;
+}
+
+.nav__icons:hover {
+    background-color: #f03250;
+    color: white;
+
+}
+.carousel__container{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+.reviews__description {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideRight 0.255s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+
+}
+
+.user__description {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.user__name {
+    font-size: 20px;
+}
+
+.user__designation {
+    font-weight: 300;
+}
+
+.user__details {
+    margin-left: 1rem;
+}
+
+.show {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.slide-left {
+    position: relative;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-200%);
+      }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(200%);
+      }
+}

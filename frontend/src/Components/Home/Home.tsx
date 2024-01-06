@@ -5,6 +5,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt, FaSearch } from "react-icons/fa";
 import StarRating from "react-star-ratings";
 import { useState } from "react";
+import OurReviews from "../../Layout/Reviews/OurReviews";
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const business__categories = [
@@ -416,6 +417,10 @@ const Home = () => {
             </Link>
           </div>
         </div>
+      </div>
+
+      <div className="reviews__section">
+        <OurReviews />
       </div>
     </div>
   );
