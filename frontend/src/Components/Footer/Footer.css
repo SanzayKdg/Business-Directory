@@ -1,0 +1,119 @@
+.footer__top {
+    margin-top: 6rem;
+    padding: 0 16rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.footer__section {
+    flex: 0.25;
+}
+
+.footer__logo {
+    display: flex;
+    gap: 0 8px;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.website__logo {
+    width: 2rem;
+}
+
+.website__name {
+    font-size: 1.5rem;
+    line-height: 30px;
+}
+
+.footer__nav__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer__links {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__link {
+    margin: 8px 0;
+}
+
+.h3__light {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.footer__social__icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.social__icon__link {
+    font-size: 28px;
+}
+
+.social__icon__link:hover,
+.footer__link:hover {
+    color: #f03250;
+}
+
+.footer__email {
+    margin-top: 2rem;
+}
+
+.footer__app {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.store__btn {
+    border: 1px solid var(--black-75);
+    background-color: #fff !important;
+    padding: 2rem 0;
+    display: flex;
+    width: 15rem;
+    justify-content: flex-start !important;
+    gap: 8px;
+    color: var(--black-75) !important;
+}
+
+.store__icon {
+    font-size: 48px;
+}
+
+.store__desc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.store__heading {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.store__name {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.store__btn:hover {
+    border: 1px solid #f03250;
+    background-color: #f03250 !important;
+    color: #fff !important;
+}
+
+.footer__bottom{
+    margin-top: 2rem;
+    padding: 2rem;
+    border-top: 1px solid var(--black-10);
+}

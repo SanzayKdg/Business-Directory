@@ -1,13 +1,39 @@
-import { Button, Image, Input, Select } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import "./Home.css";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaPhoneAlt, FaSearch } from "react-icons/fa";
-import StarRating from "react-star-ratings";
+import { Image } from "@chakra-ui/react";
 import { useState } from "react";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import StarRating from "react-star-ratings";
+import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
+import "./Home.css";
+import SearchForm from "../../Layout/SearchForm/SearchForm";
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
+  const blogs = [
+    {
+      title: "Internet Banner Advertising Most Reliable",
+      tags: ["Videos", "Travel"],
+      cover: "/background/list.jpg",
+      user: "John Doe",
+      createdAt: "2023-12-28T13:54:40.645+00:00",
+    },
+    {
+      title: "Google inks pact for new 35-storey office",
+      tags: ["Lifestyle", "Travel"],
+      cover: "/background/list.jpg",
+      user: "John Smith",
+      createdAt: "2023-15-28T13:54:40.645+00:00",
+    },
+    {
+      title: "Etiquette tips for travellers",
+      tags: ["Lifestyle", "Travel"],
+      cover: "/background/list.jpg",
+      user: "Jeff Sheldon",
+      createdAt: "2023-17-28T13:54:40.645+00:00",
+    },
+  ];
+
   const business__categories = [
     {
       name: "Chinese Sausage Restaurant",
@@ -19,6 +45,7 @@ const Home = () => {
       img: "/icons/restaurant.svg",
       listings: 69,
       open_status: false,
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
     },
     {
       name: "Woozie Chinese Restaurant",
@@ -28,6 +55,7 @@ const Home = () => {
       category: "Shopping",
       is__popular: true,
       img: "/icons/bag.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: true,
@@ -40,6 +68,7 @@ const Home = () => {
       category: "Beauty",
       is__popular: true,
       img: "/icons/leaf.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: false,
@@ -52,6 +81,7 @@ const Home = () => {
       category: "Automobiles",
       is__popular: false,
       img: "/icons/restaurant.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: true,
@@ -64,6 +94,7 @@ const Home = () => {
       category: "Real Estate",
       is__popular: false,
       img: "/icons/restaurant.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: false,
@@ -76,6 +107,7 @@ const Home = () => {
       category: "Hotels",
       is__popular: true,
       img: "/icons/bed.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: true,
@@ -88,6 +120,7 @@ const Home = () => {
       category: "Bars & Pubs",
       is__popular: true,
       img: "/icons/wine.svg",
+      address: "236 Littleton St. New Philadelphia, Ohio, United States",
 
       listings: 69,
       open_status: false,
@@ -103,90 +136,16 @@ const Home = () => {
   return (
     <div className="home__container">
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
-      <div className="home__top">
-        <h1 className="home__heading h1__text">
-          Discover The Best Services Near You
-        </h1>
-        <h4 className="home__description p_text">
-          1.118.940.376 The best service package is waiting for you
-        </h4>
+      <div className="home__form">
+        <SearchForm
+          heading="Discover The Best Services Near You"
+          description="1.118.940.376 The best service package is waiting for you"
+          categories_filter={business__categories}
+        />
       </div>
-
-      <div className="home__mid">
-        <form className="home__form">
-          <div className="home__form__item">
-            <Input
-              focusBorderColor="white"
-              className="home__form__input p__text"
-              border="hidden"
-              type="email"
-              width="380px"
-              placeholder="What are you Looking for?"
-            />
-          </div>
-          <div className="form__divider"></div>
-          <div className="home__form__item location__form__item">
-            <Input
-              focusBorderColor="white"
-              border="hidden"
-              className="home__form__input p__text"
-              type="text"
-              placeholder="Location"
-            />
-            <FaLocationDot size={20} className="service__icon" />
-          </div>
-          <div className="form__divider"></div>
-
-          <div className="home__form__item">
-            <Select
-              border="hidden"
-              // focusBorderColor="white"
-              className="home__form__input p__text"
-              placeholder="Category"
-              width="150px"
-            >
-              <option className="p__text" value={"hello"}>
-                Hello
-              </option>
-              <option className="p__text" value={"hello1"}>
-                Hello 1
-              </option>
-              <option className="p__text" value={"hello2"}>
-                Hello 2
-              </option>
-              <option className="p__text" value={"hello3"}>
-                Hello 3
-              </option>
-            </Select>
-          </div>
-
-          <Button className="home__search__btn" colorScheme="red">
-            <p className="p__text search__icon">
-              Search <FaSearch size={18} />
-            </p>
-          </Button>
-        </form>
-      </div>
-
-      <div className="home__filter">
-        {business__categories &&
-          business__categories.map((item, index) => (
-            <Button
-              key={index} //temporary
-              style={{ marginLeft: "1rem" }}
-              className="home__filters__items"
-              colorScheme="whiteAlpha"
-            >
-              <Link className="filter__link p__text" to={"/"}>
-                {item.category}
-              </Link>
-            </Button>
-          ))}
-      </div>
-
       {/* ---------------------- HOME - POPULAR CATEGORIES  ------------------------------------- */}
 
-      <div className="home__popular__categories">
+      <div className="home__popular__categories px__16">
         <div className="popular__categories__top">
           <h1 className="text__center black__text h1__text">
             Most Popular Categories
@@ -225,7 +184,7 @@ const Home = () => {
 
       {/* ---------------------- HOME - MOST SEARCHED CATEGORIES / SERVICES  ------------------------------------- */}
 
-      <div className="home__services">
+      <div className="home__services px__16">
         <div className="home__services__top">
           <h1 className="black__text h1__text text__center">
             Most Searched Services
@@ -284,10 +243,7 @@ const Home = () => {
                       <div className="home__service__contact">
                         <div className="service__location">
                           <FaLocationDot size={24} className="service__icon" />
-                          <p className="service__address">
-                            236 Littleton St. New Philadelphia, Ohio, United
-                            States
-                          </p>
+                          <p className="service__address">{item.address}</p>
                         </div>
                         <div className="service__phone">
                           <FaPhoneAlt size={18} className="service__icon" />
@@ -316,7 +272,7 @@ const Home = () => {
       </div>
 
       {/* ---------------------- HOME - HOW IT WORKS  ------------------------------------- */}
-      <div className="home__works__description">
+      <div className="home__works__description px__16">
         <div className="home__works__top">
           <h1 className="black__text h1__text text__center">
             How Does It Work
@@ -373,7 +329,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="featured__location">
+      {/* ---------------------- HOME - FEATURED LOCATION  ------------------------------------- */}
+      <div className="featured__location px__16">
         <div className="featured__location__top">
           <h1 className="black__text h1__text text__center">
             Top Featured Location
@@ -419,8 +376,60 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="reviews__section">
+      {/* ---------------------- HOME - OUR REVIEWS  ------------------------------------- */}
+
+      <div className="reviews__section px__16">
         <OurReviews />
+      </div>
+
+      {/* ---------------------- HOME - BLOGS / NEWS POST  ------------------------------------- */}
+
+      <div className="blogs__section px__16">
+        <div className="home__works__top">
+          <h1 className="black__text h1__text text__center">News Posts</h1>
+          <h4 className="black__text p__text text__center">
+            Checkout Latest News And Articles From Our Blog
+          </h4>
+        </div>
+
+        <div className="home__services__container">
+          {blogs &&
+            blogs.map((blog) => (
+              <Link key={blog.title} to={"/"} className="blogs__card">
+                <div className="blog__top">
+                  <Image
+                    className="blog__background"
+                    src={blog.cover}
+                    alt="Business Image"
+                  />
+                </div>
+
+                <div className="blogs__mid">
+                  <div className="blog__details">
+                    <div className="blog__details__top">
+                      <p className="p__text blog__tags">{blog.tags[0]}</p>
+                      <p className="p__text blog__divider">.</p>
+                      <p className="p__text blog__tags">{blog.tags[1]}</p>
+                    </div>
+
+                    <p className="p__text blog__title">
+                      <b>{blog.title}</b>
+                    </p>
+
+                    <div className="user__blog">
+                      <p className="p__text blog__user__details">19th March</p>
+                      <p className="p__text blog__user__details">{blog.user}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+        </div>
+      </div>
+
+      {/* ---------------------- HOME - BLOGS / NEWS POST  ------------------------------------- */}
+      <div className="home__newsletter px__16">
+        <Newsletter />
       </div>
     </div>
   );

@@ -1,86 +1,14 @@
 .home__container {
-    position: absolute;
-    top: 20rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    padding: 0 16rem;
-}
-
-.home__top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.home__heading {
-    color: #fff;
-    text-align: center;
-}
-
-.home__description {
-    color: #fff;
-}
-
-.home__mid {
-    display: flex;
-    width: 100%;
-    background-color: #fff;
-    justify-content: center;
-    padding: 2rem 3rem;
-}
-
-.home__form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.home__form__input {
-    border-radius: 0;
-}
-
-.home__search__btn {
-    margin-left: 2rem;
-    padding: 1.5rem 2.5rem !important;
-}
-
-.form__divider {
-    background-color: #a8a8a8b3;
-    width: 1px;
-    height: 3rem;
-    margin: 0 1rem;
-}
-
-.location__form__item {
-    display: flex;
-    align-items: center;
-}
-
-.search__icon {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.home__location {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.home__filter {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    margin-top: -45rem;
 }
 
 .home__popular__categories {
-    margin-top: 32rem;
+    margin-top: 56rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -366,4 +294,67 @@
 .reviews__section{
     width: 100%;
     margin-top: 16rem;
+}
+
+.blogs__section{
+    margin-top: 16rem;
+    width: 100%;
+}
+
+.blogs__card{
+    border-radius: 10px;
+    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
+    height: 27rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog__details{
+    display: flex;
+    flex-direction: column;
+}
+
+.blog__details__top{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.blogs__mid{
+    padding: 10px 20px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+}
+.blog__tags{
+    color: var(--black-75);
+    font-size: 14px;
+}
+
+.blog__divider{
+    margin: 0 10px;
+}
+
+.user__blog{
+    display: flex;
+    justify-content: space-between;
+}
+
+.blog__user__details{
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--black-50);
+}
+
+.home__newsletter{
+    margin-top: 16rem;
+    width: 100%;
+    padding: 4rem 0;
+    background-color: #f9f9f9;
+}
+
+.px__16{
+    padding-left: 16rem;
+    padding-right: 16rem;
+
 }
