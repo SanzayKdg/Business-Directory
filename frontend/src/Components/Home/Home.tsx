@@ -1,13 +1,105 @@
 import { Image } from "@chakra-ui/react";
 import { useState } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import StarRating from "react-star-ratings";
+import ListingCard from "../../Layout/ListingCard/ListingCard";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
-import "./Home.css";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
+import "./Home.css";
+
+export const business__categories = [
+  {
+    name: "Chinese Sausage Restaurant",
+    ratings: 5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Restaurant",
+    is__popular: true,
+    img: "/icons/restaurant.svg",
+    listings: 69,
+    open_status: false,
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+  },
+  {
+    name: "Woozie Chinese Restaurant",
+    ratings: 5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Shopping",
+    is__popular: true,
+    img: "/icons/bag.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: true,
+  },
+  {
+    name: "Ryder Hair Salon Restaurant",
+    ratings: 1.5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Beauty",
+    is__popular: true,
+    img: "/icons/leaf.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: false,
+  },
+  {
+    name: "Big Smoke Taco Bell",
+    ratings: 2.5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Automobiles",
+    is__popular: false,
+    img: "/icons/restaurant.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: true,
+  },
+  {
+    name: "Sweet Tatto Parlor",
+    ratings: 4.5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Real Estate",
+    is__popular: false,
+    img: "/icons/restaurant.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: false,
+  },
+  {
+    name: "Cesar Car Center",
+    ratings: 3.5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Hotels",
+    is__popular: true,
+    img: "/icons/bed.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: true,
+  },
+  {
+    name: "Carl Casino Restaurant",
+    ratings: 3.5,
+    logo: "/logo/logo512.svg",
+    image: ["/background/list.jpg"],
+    category: "Bars & Pubs",
+    is__popular: true,
+    img: "/icons/wine.svg",
+    address: "236 Littleton St. New Philadelphia, Ohio, United States",
+
+    listings: 69,
+    open_status: false,
+  },
+];
+
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const blogs = [
@@ -31,99 +123,6 @@ const Home = () => {
       cover: "/background/list.jpg",
       user: "Jeff Sheldon",
       createdAt: "2023-17-28T13:54:40.645+00:00",
-    },
-  ];
-
-  const business__categories = [
-    {
-      name: "Chinese Sausage Restaurant",
-      ratings: 5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Restaurant",
-      is__popular: true,
-      img: "/icons/restaurant.svg",
-      listings: 69,
-      open_status: false,
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-    },
-    {
-      name: "Woozie Chinese Restaurant",
-      ratings: 5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Shopping",
-      is__popular: true,
-      img: "/icons/bag.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: true,
-    },
-    {
-      name: "Ryder Hair Salon Restaurant",
-      ratings: 1.5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Beauty",
-      is__popular: true,
-      img: "/icons/leaf.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: false,
-    },
-    {
-      name: "Big Smoke Taco Bell",
-      ratings: 2.5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Automobiles",
-      is__popular: false,
-      img: "/icons/restaurant.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: true,
-    },
-    {
-      name: "Sweet Tatto Parlor",
-      ratings: 4.5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Real Estate",
-      is__popular: false,
-      img: "/icons/restaurant.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: false,
-    },
-    {
-      name: "Cesar Car Center",
-      ratings: 3.5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Hotels",
-      is__popular: true,
-      img: "/icons/bed.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: true,
-    },
-    {
-      name: "Carl Casino Restaurant",
-      ratings: 3.5,
-      logo: "/logo/logo512.svg",
-      image: ["/background/list.jpg"],
-      category: "Bars & Pubs",
-      is__popular: true,
-      img: "/icons/wine.svg",
-      address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-      listings: 69,
-      open_status: false,
     },
   ];
 
@@ -214,58 +213,59 @@ const Home = () => {
           <div className="home__services__container">
             {most__searched &&
               most__searched.map((item, index) => (
-                <Link key={index} to={"/"} className="services__card">
-                  <div className="services__top">
-                    <Image
-                      className="service__background"
-                      src={item.image[0]}
-                      alt="Business Image"
-                    />
-                  </div>
+                <ListingCard item={item} index={index} />
+                // <Link key={index} to={"/"} className="services__card">
+                //   <div className="services__top">
+                //     <Image
+                //       className="service__background"
+                //       src={item.image[0]}
+                //       alt="Business Image"
+                //     />
+                //   </div>
 
-                  <div className="services__logo">
-                    <Image className="service__logo" src={item.logo} />
-                  </div>
+                //   <div className="services__logo">
+                //     <Image className="service__logo" src={item.logo} />
+                //   </div>
 
-                  <div className="services__mid">
-                    <div className="service__details">
-                      <p className="p__text business__name">
-                        <b>{item.name}</b>
-                      </p>
-                      <div className="ratings">
-                        <StarRating
-                          rating={item.ratings}
-                          starRatedColor="#f6c914"
-                          starDimension="18px"
-                          starSpacing="1px"
-                        />
-                      </div>
-                      <div className="home__service__contact">
-                        <div className="service__location">
-                          <FaLocationDot size={24} className="service__icon" />
-                          <p className="service__address">{item.address}</p>
-                        </div>
-                        <div className="service__phone">
-                          <FaPhoneAlt size={18} className="service__icon" />
-                          <p className="service__address">(+12) 345-678-910</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="services__bottom">
-                    <p className="service__category p__text">
-                      <b>Restaurant</b>
-                    </p>
+                //   <div className="services__mid">
+                //     <div className="service__details">
+                //       <p className="p__text business__name">
+                //         <b>{item.name}</b>
+                //       </p>
+                //       <div className="ratings">
+                //         <StarRating
+                //           rating={item.ratings}
+                //           starRatedColor="#f6c914"
+                //           starDimension="18px"
+                //           starSpacing="1px"
+                //         />
+                //       </div>
+                //       <div className="home__service__contact">
+                //         <div className="service__location">
+                //           <FaLocationDot size={24} className="service__icon" />
+                //           <p className="service__address">{item.address}</p>
+                //         </div>
+                //         <div className="service__phone">
+                //           <FaPhoneAlt size={18} className="service__icon" />
+                //           <p className="service__address">(+12) 345-678-910</p>
+                //         </div>
+                //       </div>
+                //     </div>
+                //   </div>
+                //   <div className="services__bottom">
+                //     <p className="service__category p__text">
+                //       <b>Restaurant</b>
+                //     </p>
 
-                    <p
-                      className={`service__open__status p__text ${
-                        item.open_status ? "green__text" : "red__text"
-                      } `}
-                    >
-                      <b>{item.open_status ? "Open" : "Closed"}</b>
-                    </p>
-                  </div>
-                </Link>
+                //     <p
+                //       className={`service__open__status p__text ${
+                //         item.open_status ? "green__text" : "red__text"
+                //       } `}
+                //     >
+                //       <b>{item.open_status ? "Open" : "Closed"}</b>
+                //     </p>
+                //   </div>
+                // </Link>
               ))}
           </div>
         </div>

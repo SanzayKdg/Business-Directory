@@ -79,14 +79,14 @@
     background-color: #fff !important;
     padding: 2rem 0;
     display: flex;
-    width: 15rem;
+    width: 13rem;
     justify-content: flex-start !important;
     gap: 8px;
     color: var(--black-75) !important;
 }
 
 .store__icon {
-    font-size: 48px;
+    font-size: 32px;
 }
 
 .store__desc {
@@ -102,7 +102,7 @@
 }
 
 .store__name {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
 }
 

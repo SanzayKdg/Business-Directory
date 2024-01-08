@@ -112,68 +112,6 @@
     transition: color .4s;
 }
 
-.services__card {
-    border-radius: 10px;
-    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
-}
-
-.service__background {
-    border-radius: 10px 10px 0 0;
-}
-
-
-.services__logo {
-    position: relative;
-    bottom: 2rem;
-    width: 100%;
-    padding: 0 2rem;
-    margin-bottom: -2rem;
-}
-
-.service__logo {
-    width: 4rem;
-}
-
-.business__name {
-    font-size: 18px;
-}
-
-.services__mid {
-    padding: 0 1.5rem;
-}
-
-.service__location {
-    display: flex;
-    margin-top: 1rem;
-}
-
-.service__icon {
-    color: var(--black-75);
-    margin-right: 10px;
-}
-
-.service__address {
-    font-size: 14px;
-    font-family: var(--base-font-family);
-    font-weight: var(--base-font-weight);
-}
-
-.service__phone {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-
-.services__bottom {
-    margin-top: 1rem;
-    border-top: 1px solid var(--black-25);
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 2rem;
-}
-
-
 .home__works__description {
     margin-top: 16rem;
     width: 100%;
@@ -265,14 +203,14 @@
     height: 260px;
 }
 
-.left__location
-,.right__location
-,.right__bottom__location{
+.left__location,
+.right__location,
+.right__bottom__location {
     filter: brightness(60%);
     border-radius: 10px;
 }
 
-.location__name{
+.location__name {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -282,7 +220,7 @@
     line-height: 25px;
 }
 
-.location__listing{
+.location__listing {
     font-size: 14px;
     font-weight: 300;
 }
@@ -291,17 +229,17 @@
     filter: brightness(70%);
 }
 
-.reviews__section{
+.reviews__section {
     width: 100%;
     margin-top: 16rem;
 }
 
-.blogs__section{
+.blogs__section {
     margin-top: 16rem;
     width: 100%;
 }
 
-.blogs__card{
+.blogs__card {
     border-radius: 10px;
     box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
     height: 27rem;
@@ -309,51 +247,52 @@
     flex-direction: column;
 }
 
-.blog__details{
+.blog__details {
     display: flex;
     flex-direction: column;
 }
 
-.blog__details__top{
+.blog__details__top {
     display: flex;
     margin-top: 1rem;
 }
 
-.blogs__mid{
+.blogs__mid {
     padding: 10px 20px;
     display: flex;
     flex: 1;
     align-items: center;
 
 }
-.blog__tags{
+
+.blog__tags {
     color: var(--black-75);
     font-size: 14px;
 }
 
-.blog__divider{
+.blog__divider {
     margin: 0 10px;
 }
 
-.user__blog{
+.user__blog {
     display: flex;
     justify-content: space-between;
 }
 
-.blog__user__details{
+.blog__user__details {
     font-size: 14px;
     font-weight: 300;
     color: var(--black-50);
 }
 
-.home__newsletter{
+.home__newsletter {
     margin-top: 16rem;
     width: 100%;
     padding: 4rem 0;
     background-color: #f9f9f9;
 }
 
-.px__16{
+.px__16 {
     padding-left: 16rem;
     padding-right: 16rem;
 

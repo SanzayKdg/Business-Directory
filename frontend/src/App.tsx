@@ -1,14 +1,14 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./Components/Header/Header";
 import "./App.css";
-import Footer from "./Components/Footer/Footer";
+import Header from "./Layout/Header/Header";
+import Footer from "./Layout/Footer/Footer";
 // ------------------------ LAZY LOADING ----------------------------------------
 
 const Home = lazy(() => import("./Components/Home/Home"));
 const About = lazy(() => import("./Components/About/About"));
 const Contact = lazy(() => import("./Components/Contact/Contact"));
-
+const Listings = lazy(() => import("./Components/Listings/Listings"));
 function App() {
   return (
     <div>
@@ -19,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/listings" element={<Listings />} />
           </Routes>
         </Suspense>
         <Footer />
