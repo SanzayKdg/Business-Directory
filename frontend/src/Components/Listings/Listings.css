@@ -1,8 +1,9 @@
-.listing__container{
+.listing__container {
     width: 100%;
     margin-top: -45rem;
-    border: 2px solid red;
+    border: none;
 }
+
 
 .listing__header {
     width: 100%;
@@ -10,10 +11,10 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    border: 2px solid red;
+    top: 20rem;
 }
 
-.listing__bottom{
+.listing__bottom {
     margin-top: 56rem;
     padding: 0 16rem;
     display: flex;
@@ -21,46 +22,53 @@
     gap: 2rem;
 }
 
-.listing__filters{
-    border: 2px solid red;
+.listing__filters {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
-    flex: 0.4;
-    
+    flex: 0.3;
+    height: fit-content;
+
 }
 
-.filter__container{
+.listing__filters {
+    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 1rem;
+
+}
+
+.filter__container, .listings__cards__container {
     margin-top: 1rem;
 }
 
 
-.form__item{
+.form__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: 1px solid var(--black-10);
-    margin: 1rem;
+    margin-bottom: 2rem;
     padding: 5px 10px 5px 1rem;
     border-radius: 6px;
 }
 
-.search__field{
+.search__field {
     width: 90%;
     padding: 0;
 }
 
-.form__select{
+.form__select {
     padding: 0;
     font-size: 16px !important;
 }
 
-.filter__search__icon{
+.filter__search__icon {
     font-size: 20px;
     color: var(--black-50);
+    width: 12px;
 }
 
-.rating__filter{
+.rating__filter {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -68,17 +76,26 @@
     gap: 5px;
 }
 
-.reset__btn{
-    border:none
+.reset__btn {
+    border: none
 }
 
-.filter__reset__btn{
+.filter__reset__btn {
     width: 100%;
 }
 
 
 
-.all__listings{
-    border: 2px solid blue;
-    flex: 0.7;
+.all__listings {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+     border-radius: 6px;
+    padding: 1rem;
+}
+
+.listings__cards__container{
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2 ,2fr);
 }

@@ -6,125 +6,12 @@ import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
 import "./Home.css";
+import {business__categories, blogs} from "../../dummydata"
 
-export const business__categories = [
-  {
-    name: "Chinese Sausage Restaurant",
-    ratings: 5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Restaurant",
-    is__popular: true,
-    img: "/icons/restaurant.svg",
-    listings: 69,
-    open_status: false,
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-  },
-  {
-    name: "Woozie Chinese Restaurant",
-    ratings: 5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Shopping",
-    is__popular: true,
-    img: "/icons/bag.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: true,
-  },
-  {
-    name: "Ryder Hair Salon Restaurant",
-    ratings: 1.5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Beauty",
-    is__popular: true,
-    img: "/icons/leaf.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: false,
-  },
-  {
-    name: "Big Smoke Taco Bell",
-    ratings: 2.5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Automobiles",
-    is__popular: false,
-    img: "/icons/restaurant.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: true,
-  },
-  {
-    name: "Sweet Tatto Parlor",
-    ratings: 4.5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Real Estate",
-    is__popular: false,
-    img: "/icons/restaurant.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: false,
-  },
-  {
-    name: "Cesar Car Center",
-    ratings: 3.5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Hotels",
-    is__popular: true,
-    img: "/icons/bed.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: true,
-  },
-  {
-    name: "Carl Casino Restaurant",
-    ratings: 3.5,
-    logo: "/logo/logo512.svg",
-    image: ["/background/list.jpg"],
-    category: "Bars & Pubs",
-    is__popular: true,
-    img: "/icons/wine.svg",
-    address: "236 Littleton St. New Philadelphia, Ohio, United States",
-
-    listings: 69,
-    open_status: false,
-  },
-];
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
-  const blogs = [
-    {
-      title: "Internet Banner Advertising Most Reliable",
-      tags: ["Videos", "Travel"],
-      cover: "/background/list.jpg",
-      user: "John Doe",
-      createdAt: "2023-12-28T13:54:40.645+00:00",
-    },
-    {
-      title: "Google inks pact for new 35-storey office",
-      tags: ["Lifestyle", "Travel"],
-      cover: "/background/list.jpg",
-      user: "John Smith",
-      createdAt: "2023-15-28T13:54:40.645+00:00",
-    },
-    {
-      title: "Etiquette tips for travellers",
-      tags: ["Lifestyle", "Travel"],
-      cover: "/background/list.jpg",
-      user: "Jeff Sheldon",
-      createdAt: "2023-17-28T13:54:40.645+00:00",
-    },
-  ];
+  
 
   const popular__categories = business__categories.filter(
     (category) => category.is__popular
@@ -213,7 +100,7 @@ const Home = () => {
           <div className="home__services__container">
             {most__searched &&
               most__searched.map((item, index) => (
-                <ListingCard item={item} index={index} />
+                <ListingCard key={index} item={item} index={index} />
                 // <Link key={index} to={"/"} className="services__card">
                 //   <div className="services__top">
                 //     <Image

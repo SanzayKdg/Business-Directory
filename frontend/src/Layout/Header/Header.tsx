@@ -1,6 +1,6 @@
 import { Avatar, Button, Image } from "@chakra-ui/react";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -15,37 +15,27 @@ const Header = () => {
           <Avatar src="/logo/logo512.svg" size="lg" className="" name="Logo" />
         </div>
         <div className="header__mid">
-          <ul className="nav__items">
-            <li className="nav__links">
-              <Link to="/" className="nav__link">
-                Home
-              </Link>
-            </li>
-            <li className="nav__links">
-              <Link to="/listings" className="nav__link">
-                Listings
-              </Link>
-            </li>
-            <li className="nav__links">
-              <Link to="/" className="nav__link">
-                About Us
-              </Link>
-            </li>
-            <li className="nav__links">
-              <Link to="/" className="nav__link">
-                Blog
-              </Link>
-            </li>
-            <li className="nav__links">
-              <Link to="/" className="nav__link">
-                Contact Us
-              </Link>
-            </li>
-          </ul>
+          <NavLink to="/" className="nav__link">
+            Home
+          </NavLink>
+          <NavLink to="/listings" className="nav__link">
+            Listings
+          </NavLink>
+          <NavLink to="/about" className="nav__link">
+            About Us
+          </NavLink>
+          <NavLink to="/blogs" className="nav__link">
+            Blog
+          </NavLink>
+          <NavLink to="/contact" className="nav__link">
+            Contact Us
+          </NavLink>
         </div>
         <div className="header__right">
           <Button colorScheme="red" className="header__cta__btns">
-            <Link className="add_listing__link" to={"/"}>Add Listing +</Link>
+            <Link className="add_listing__link" to={"/"}>
+              Add Listing +
+            </Link>
           </Button>
           {/* <Button style={{marginLeft: "1rem"}} className="header__cta__btns" colorScheme="whiteAlpha">
             <Link to={"/"}>Sign In</Link>

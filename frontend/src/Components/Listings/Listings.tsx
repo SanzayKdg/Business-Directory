@@ -1,15 +1,14 @@
-import { Button, Input, Select } from "@chakra-ui/react";
-import { FaLocationDot } from "react-icons/fa6";
 import {
-  RangeSlider,
-  RangeSliderTrack,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
+  Button, Input, RangeSlider, RangeSliderFilledTrack,
+  RangeSliderThumb, RangeSliderTrack, Select
 } from "@chakra-ui/react";
-import { FaSearch } from "react-icons/fa";
-import "./Listings.css";
+import { FaChevronDown, FaSearch } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 import StarRatings from "react-star-ratings";
-import { FaChevronDown } from "react-icons/fa";
+import ListingCard from "../../Layout/ListingCard/ListingCard";
+import { business__categories } from "../../dummydata";
+import "./Listings.css";
+
 const Listings = () => {
   return (
     <div className="listing__container">
@@ -56,7 +55,7 @@ const Listings = () => {
                   border="hidden"
                   className="p__text filter__select "
                   placeholder="Category"
-                  iconSize="20"
+                  iconSize="12"
                   iconColor="#261f2280"
                   size="lg"
                   icon={<FaChevronDown />}
@@ -103,7 +102,11 @@ const Listings = () => {
               </div>
 
               <div className="form__item reset__btn">
-                <Button colorScheme="blackAlpha" variant="outline" className="filter__reset__btn">
+                <Button
+                  colorScheme="blackAlpha"
+                  variant="outline"
+                  className="filter__reset__btn"
+                >
                   Reset
                 </Button>
               </div>
@@ -114,7 +117,16 @@ const Listings = () => {
         {/* ---------------------- LISTING - CARDS  ------------------------------------- */}
 
         <div className="all__listings">
-          <div className="listing__card">helo listings</div>
+          <div className="all__listing__heading">
+            <h3 className="p__text">5432 Listings are available</h3>
+          </div>
+
+          <div className="listings__cards__container">
+            {business__categories &&
+              business__categories.map((item, index) => (
+                <ListingCard key={index} item={item} index={index} />
+              ))}
+          </div>
         </div>
       </div>
     </div>

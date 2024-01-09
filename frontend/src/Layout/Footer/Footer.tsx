@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="footer__top">
         <div className="footer__section">
           <Link to="/" className="footer__logo">
-            <Image src="/public/logo/logo512.svg" className="website__logo" />
+            <Image src="/logo/logo512.svg" className="website__logo" />
             <h1 className="h1__text website__name">BIZHUB</h1>
           </Link>
 
