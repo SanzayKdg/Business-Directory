@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsIn,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
@@ -52,6 +53,28 @@ export class UpdatePasswordDTO {
   @MinLength(8)
   @IsNotEmpty()
   old_password!: string;
+
+  @IsString()
+  @MinLength(8)
+  @IsNotEmpty()
+  new_password!: string;
+
+  @IsString()
+  @MinLength(8)
+  @IsNotEmpty()
+  confirm_password!: string;
+}
+
+export class RequestResetPasswordDTO {
+  @IsEmail()
+  @IsNotEmpty()
+  @Transform(({ value }) => value.toLowerCase())
+  email!: string;
+}
+export class ResetPasswordDTO {
+  @IsNumber()
+  @IsNotEmpty()
+  otp!: number;
 
   @IsString()
   @MinLength(8)

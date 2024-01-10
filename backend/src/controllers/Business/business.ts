@@ -1,9 +1,10 @@
 import { Business } from "../../models/business.js";
 import { ObjectId } from "mongodb";
-import { RegisterBusinessDTO } from "./dto/business.dto.js";
+import { RegisterBusinessDTO, UpdateBusinessDTO } from "./dto/business.dto.js";
 import { validate } from "class-validator";
 import { Point } from "typeorm";
 import { BusinessAccountStatus } from "../../@types/business.t.js";
+import * as fs from "fs";
 
 // ---------------------- REGISTER BUSINESS ---------------------------------
 
@@ -107,7 +108,7 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
       user: req.user.id,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       new_business,
       message: "Successfully Registered Business.",
@@ -163,3 +164,133 @@ export const getSingleBusiness = async (req: any, res: any, next: any) => {
   }
 };
 
+// ---------------------- UPDATE BUSINESS ---------------------------------
+
+export const updateBusiness = async (req: any, res: any, next: any) => {
+  try {
+    const {
+      name,
+      description,
+      phone_number,
+      telephone,
+      website,
+      opening_hours,
+      amenity,
+      social_links,
+      address,
+      latitude,
+      longitude,
+    } = req.body;
+
+    // Handle Single Image
+    let logo: string = "";
+    let image: any = [];
+
+    const payload = new UpdateBusinessDTO();
+    payload.name = name;
+    payload.description = description;
+    payload.logo = logo;
+    payload.image = image;
+    payload.phone_number = phone_number;
+    payload.telephone = telephone;
+    payload.website = website;
+    payload.opening_hours = opening_hours;
+    payload.amenity = amenity;
+    payload.social_links = social_links;
+    payload.address = address;
+    payload.latitude = latitude;
+    payload.longitude = longitude;
+
+    // Validation
+    const errors = await validate(payload);
+
+    if (errors.length > 0) {
+      const validation_error = errors.reduce((acc: any, error) => {
+        // Destructuring error object and getting property and constraints
+        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
+        const { property, constraints } = error;
+        acc[property] = Object.values(constraints || {});
+        return acc;
+      }, {});
+      return next(
+        res.status(400).json({ success: false, message: validation_error })
+      );
+    }
+
+    // check if email is registered with business
+    const business = await Business.findOne({
+      _id: req.params.id,
+      user: new ObjectId(req.user._id),
+    });
+
+    if (!business) {
+      return next(
+        res.status(400).json({
+          success: false,
+          message: "Business Listing Not Found.",
+        })
+      );
+    }
+
+    if (payload.logo) {
+      payload.logo = null;
+    }
+    if (payload.image) {
+      payload.image = [];
+    }
+    if (req.files["logo"]) {
+      logo = req.files["logo"][0].path;
+      payload.logo = logo;
+
+      // Delete old logo (assuming business.logo is an array)
+      if (business.logo && business.logo.length > 0) {
+        const path = business.logo;
+        fs.unlinkSync(path);
+      }
+    }
+
+    if (req.files["image"]) {
+      const images = req.files["image"];
+      images.forEach((item: any) => image.push(item.path));
+      payload.image = image;
+
+      // Delete old images
+      if (business.image && business.image.length > 0) {
+        business.image.forEach((path) => fs.unlinkSync(path));
+      }
+    }
+    // save location
+    const location: Point = {
+      type: "Point",
+      coordinates: [longitude, latitude],
+    };
+
+    // save business
+    const updated_business = {
+      name,
+      description,
+      logo,
+      image,
+      phone_number,
+      telephone,
+      website,
+      opening_hours,
+      amenity,
+      social_links,
+      address,
+      business_location: location,
+    };
+
+    await Business.findByIdAndUpdate(business._id, updated_business, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Successfully Update Business Details.",
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

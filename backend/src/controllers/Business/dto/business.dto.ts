@@ -76,8 +76,64 @@ export class RegisterBusinessDTO {
   address!: string;
 
   @IsLatitude()
+  @IsOptional()
   latitude!: number;
 
   @IsLongitude()
+  @IsOptional()
+  longitude!: number;
+}
+export class UpdateBusinessDTO {
+  @IsString()
+  @IsOptional()
+  name!: string;
+
+  @IsString()
+  @IsOptional()
+  description!: string;
+
+  @IsOptional()
+  logo!: any;
+
+  @IsOptional()
+  @IsArray()
+  image!: any[];
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(10)
+  @MinLength(10)
+  phone_number!: string;
+
+  @IsString()
+  @IsOptional()
+  telephone!: string;
+
+  @IsString()
+  @IsOptional()
+  website?: string;
+
+  @IsOptional()
+  @ValidateNested()
+  opening_hours!: BusinessTimings;
+
+  @IsOptional()
+  @ValidateNested()
+  amenity?: BusinessAmenities[];
+
+  @IsOptional()
+  @IsArray()
+  social_links?: SocialLinksDTO[];
+
+  @IsString()
+  @IsOptional()
+  address!: string;
+
+  @IsLatitude()
+  @IsOptional()
+  latitude!: number;
+
+  @IsLongitude()
+  @IsOptional()
   longitude!: number;
 }
