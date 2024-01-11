@@ -32,3 +32,8 @@ export const upload = multer({ storage }).fields([
   { name: "logo", maxCount: 1 },
   { name: "image", maxCount: 5 },
 ]);
+
+export const blogUpload = multer({ storage }).fields([
+  { name: "cover", maxCount: 1 },
+  { name: "image", maxCount: 3 },
+]);

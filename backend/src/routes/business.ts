@@ -1,6 +1,7 @@
 import express from "express";
 import { is_authenticated } from "../middlewares/auth.js";
 import {
+  deleteBusiness,
   getAllBusiness,
   getSingleBusiness,
   registerBusiness,
@@ -15,10 +16,12 @@ router
   .route("/register")
   .post(is_authenticated, roles("business"), upload, registerBusiness);
 router
-  .route("/update/:id")
-  .patch(is_authenticated, roles("business"), upload, updateBusiness);
+  .route("/:id")
+  .patch(is_authenticated, roles("business"), upload, updateBusiness)
+  .delete(is_authenticated, roles("business"), deleteBusiness);
 
 // ---------------------- PUBLIC ENDPOINT ---------------------------------
+
 router.route("/all").get(getAllBusiness);
 router.route("/:id").get(getSingleBusiness);
 

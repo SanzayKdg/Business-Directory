@@ -9,6 +9,8 @@ import Auth from "./routes/auth.js";
 import Users from "./routes/users.js";
 import Business from "./routes/business.js";
 import Admin from "./routes/admin.js";
+import Reviews from "./routes/reviews.js";
+import Blogs from "./routes/blogs.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import "reflect-metadata";
@@ -22,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
-// app.use(fileupload());
 app.use(cors());
 app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
 app.use("/uploads", express.static("uploads"));
@@ -33,6 +34,8 @@ app.use("/api/auth", Auth);
 app.use("/api/users", Users);
 app.use("/api/business", Business);
 app.use("/api/admin", Admin);
+app.use("/api/reviews", Reviews);
+app.use("/api/blogs", Blogs);
 
 // listener
 const server = app.listen(PORT, () => {

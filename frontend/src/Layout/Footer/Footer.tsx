@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer__section">
-          <h3 className="h3__light text__center">Follow Us</h3>
+          <h3 className="h3__light">Follow Us</h3>
           <div className="footer__social__icons">
             <Link to="/">
               <FiFacebook className="social__icon__link" />
@@ -63,14 +63,14 @@ const Footer = () => {
           </div>
 
           <div className="footer__email">
-            <h3 className="h3__light text__center">Email</h3>
-            <p className="p__text text__center footer__link">
+            <h3 className="h3__light">Email</h3>
+            <p className="p__text footer__link">
               info@bizhub.com.np
             </p>
           </div>
         </div>
         <div className="footer__section">
-          <h3 className="h3__light text__center">Download App</h3>
+          <h3 className="h3__light">Download App</h3>
 
           <div className="footer__app">
             <Link to={"/"}>

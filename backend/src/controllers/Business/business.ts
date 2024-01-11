@@ -294,3 +294,40 @@ export const updateBusiness = async (req: any, res: any, next: any) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// ---------------------- DELETE BUSINESS ---------------------------------
+
+export const deleteBusiness = async (req: any, res: any, next: any) => {
+  try {
+    const business = await Business.findOne({
+      _id: req.params.id,
+      user: new ObjectId(req.user._id),
+    });
+
+    if (!business) {
+      return next(
+        res.status(400).json({ success: false, message: "Business not found." })
+      );
+    }
+
+    // Delete images & logo
+    if (business.logo) {
+      const path = business.logo;
+      fs.unlinkSync(path);
+    }
+
+    if (business.image) {
+      business.image.forEach((path) => {
+        fs.unlinkSync(path);
+      });
+    }
+
+    await Business.findByIdAndDelete({ _id: business._id });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Business Deleted Successfully." });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
