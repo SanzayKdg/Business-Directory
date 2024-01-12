@@ -3,6 +3,7 @@
 import { User } from "../../models/user.js";
 import ApiFeatures from "../../@helpers/ApiFeatures.js";
 import { Business } from "../../models/business.js";
+import Blog from "../../models/blogs.js";
 
 export const getAllBusiness = async (req: any, res: any, next: any) => {
   try {
@@ -104,5 +105,22 @@ export const getSingleUser = async (req: any, res: any, next: any) => {
     res.status(200).json({ success: true, user });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ---------------------- GET ALL BLOGS (ADMIN -- AUTH) ---------------------------------
+export const allBlogsAdmin = async (req: any, res: any, next: any) => {
+  try {
+    const blogs = await Blog.find();
+
+    if (!blogs) {
+      return next(
+        res.status(400).json({ success: false, message: "No Blogs Found." })
+      );
+    }
+
+    res.status(200).json({ success: true, blogs });
+  } catch (error: any) {
+    res.staus(500).json({ success: false, message: error.message });
   }
 };

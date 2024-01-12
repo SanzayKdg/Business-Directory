@@ -4,7 +4,6 @@ import {
   getAllBlogs,
   getSinlgeBlog,
   deleteBlog,
-  allBlogsAdmin,
 } from "../controllers/Blogs/Blogs.js";
 import { is_authenticated } from "../middlewares/auth.js";
 import { blogUpload } from "../middlewares/multer.js";
@@ -20,6 +19,4 @@ router.route("/delete/:id").delete(is_authenticated, deleteBlog);
 router.route("/all").get(getAllBlogs);
 router.route("/:id").get(getSinlgeBlog);
 
-// ---------------------- ADMIN ENDPOINT (AUTH) ---------------------------------
-router.route("/admin/all").get(is_authenticated, roles("admin"), allBlogsAdmin);
 export default router;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { BlogStatus } from "../@types/blogs.t.js";
+import { BlogCategory, BlogStatus } from "../@types/blogs.t.js";
 
 const blogSchmea = new mongoose.Schema(
   {
@@ -9,13 +9,21 @@ const blogSchmea = new mongoose.Schema(
     },
     slug: {
       type: String,
-      //   required: [true, "Please enter blog slug."],
+      required: [true, "Please enter blog slug."],
       unique: true,
     },
     description: {
       type: String,
       required: [true, "Please add your blog description."],
     },
+
+    category: {
+      type: String,
+      enum: Object.values(BlogCategory),
+      default: BlogCategory.OTHER,
+      required: [true, "Please select atleast one category."],
+    },
+
     cover: {
       type: String,
     },
