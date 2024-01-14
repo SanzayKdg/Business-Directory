@@ -9,7 +9,7 @@ import { ObjectId } from "mongodb";
 // ---------------------- CREATE NEW BLOG (PUBLC -- AUTH) ---------------------------------
 export const newBlog = async (req: any, res: any, next: any) => {
   try {
-    const { title, slug, description, tags } = req.body;
+    const { title, slug, description, tags, category } = req.body;
     // const slug = slugify(title, { lower: true });
     // Handle Single Image
     const cover = req.files["cover"][0].path;
@@ -26,6 +26,7 @@ export const newBlog = async (req: any, res: any, next: any) => {
     payload.cover = cover;
     payload.image = image;
     payload.tags = tags;
+    payload.category = category;
 
     // Validation
     const errors = await validate(payload);
@@ -44,12 +45,13 @@ export const newBlog = async (req: any, res: any, next: any) => {
     }
 
     await Blog.create({
-      title,
-      slug,
-      description,
-      tags,
-      cover,
-      image,
+      title : payload.title,
+      slug : payload.slug,
+      description : payload.description,
+      tags : payload.tags,
+      cover : payload.cover,
+      image : payload.image,
+      category : payload.category,
       user: req.user._id,
     });
 
@@ -105,7 +107,7 @@ export const getSinlgeBlog = async (req: any, res: any, next: any) => {
 // ---------------------- CREATE NEW BLOG (PUBLC -- AUTH) ---------------------------------
 export const updateBlog = async (req: any, res: any, next: any) => {
   try {
-    const { title, slug, description, tags } = req.body;
+    const { title, slug, category, description, tags } = req.body;
     // const slug = slugify(title, { lower: true });
     let cover: string = "";
     let image: any = [];
@@ -113,39 +115,41 @@ export const updateBlog = async (req: any, res: any, next: any) => {
     payload.title = title;
     payload.slug = slug;
     payload.description = description;
+    payload.category = category;
     payload.cover = cover;
     payload.image = image;
     payload.tags = tags;
-    // Handle Single Image
 
-    //  = req.files["cover"][0].path;
-
-    // Handle Multiple Image
-    const images = req.files["image"];
-    images.forEach((item: any) => image.push(item.path));
-
+    // check if blog exists
     const blog = await Blog.findOne({
       _id: req.params.id,
       user: req.user._id,
     });
 
-    if(!blog){
-      return next(res.status(400).json({ success  : false, message : "Blog "}))
+    if (!blog) {
+      return next(
+        res
+          .status(400)
+          .json({
+            success: false,
+            message: "Blog doesnot exists or have been deleted.",
+          })
+      );
     }
 
-    if (payload.logo) {
-      payload.logo = null;
+    if (payload?.cover) {
+      payload.cover = null;
     }
-    if (payload.image) {
+    if (payload?.image) {
       payload.image = [];
     }
-    if (req.files["logo"]) {
-      logo = req.files["logo"][0].path;
-      payload.logo = logo;
+    if (req.files["cover"]) {
+      cover = req.files["cover"][0].path;
+      payload.cover = cover;
 
       // Delete old logo (assuming business.logo is an array)
-      if (business.logo && business.logo.length > 0) {
-        const path = business.logo;
+      if (blog.cover && blog.cover.length > 0) {
+        const path = blog.cover;
         fs.unlinkSync(path);
       }
     }
@@ -156,8 +160,8 @@ export const updateBlog = async (req: any, res: any, next: any) => {
       payload.image = image;
 
       // Delete old images
-      if (business.image && business.image.length > 0) {
-        business.image.forEach((path) => fs.unlinkSync(path));
+      if (blog.image && blog.image.length > 0) {
+        blog.image.forEach((path) => fs.unlinkSync(path));
       }
     }
 
@@ -177,9 +181,24 @@ export const updateBlog = async (req: any, res: any, next: any) => {
       );
     }
 
-    res
-      .status(201)
-      .json({ success: true, message: "Blog created successfully." });
+    const updated_blog = {
+      title: payload.title,
+      slug: payload.slug,
+      category: payload.category,
+      description: payload.description,
+      tags: payload.tags,
+      cover: payload.cover,
+      image: payload.image,
+    };
+    await Blog.findByIdAndUpdate(blog._id, updated_blog, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Successfully Update Blog.",
+    });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }

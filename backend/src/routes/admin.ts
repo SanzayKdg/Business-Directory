@@ -24,5 +24,5 @@ router.route("/users/all").get(is_authenticated, roles("admin"), getAllUsers);
 router.route("/user/:id").get(is_authenticated, roles("admin"), getSingleUser);
 
 // ---------------------- ADMIN ENDPOINT (AUTH) ---------------------------------
-router.route("/admin/all").get(is_authenticated, roles("admin"), allBlogsAdmin);
+router.route("/blogs/all").get(is_authenticated, roles("admin"), allBlogsAdmin);
 export default router;
