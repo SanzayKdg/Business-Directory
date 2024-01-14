@@ -1,7 +1,10 @@
 import {
   IsArray,
+  IsBoolean,
+  IsBooleanString,
   IsEnum,
   IsIn,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -64,4 +67,14 @@ export class UpdateBlogDTO {
   @IsArray()
   @IsOptional()
   tags?: string[];
+}
+
+export class NewBlogReviewsDTO {
+  @IsInt()
+  @IsNotEmpty()
+  rating!: number;
+
+  @IsString()
+  @IsNotEmpty()
+  comment!: string;
 }

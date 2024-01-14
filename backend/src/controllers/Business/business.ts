@@ -1,4 +1,4 @@
-import { Business } from "../../models/business.js";
+import { Business } from "../../models/Business/business.js";
 import { ObjectId } from "mongodb";
 import { RegisterBusinessDTO, UpdateBusinessDTO } from "./dto/business.dto.js";
 import { validate } from "class-validator";

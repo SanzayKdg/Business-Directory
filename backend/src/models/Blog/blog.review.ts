@@ -4,25 +4,24 @@ const reviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
     required: [true, "Please give rating from 1 to 5."],
+    default: 0,
   },
 
   comment: {
     type: String,
-    required: [true, "Please leave a review."],
   },
-
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: [true, "Please login first to add review."],
   },
-  business: {
+  blogs: {
     type: mongoose.Schema.ObjectId,
-    ref: "Business",
+    ref: "Blogs",
     required: true,
   },
 });
 
-const Reviews = mongoose.model("Reviews", reviewSchema);
+const BlogReviews = mongoose.model("BlogReviews", reviewSchema);
 
-export default Reviews;
+export default BlogReviews;

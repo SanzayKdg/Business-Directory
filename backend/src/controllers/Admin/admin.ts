@@ -1,9 +1,9 @@
 // ---------------------- GET ALL BUSINESS LISTS ---------------------------------
 
-import { User } from "../../models/user.js";
+import { User } from "../../models/Users/user.js";
 import ApiFeatures from "../../@helpers/ApiFeatures.js";
-import { Business } from "../../models/business.js";
-import Blog from "../../models/blogs.js";
+import { Business } from "../../models/Business/business.js";
+import Blog from "../../models/Blog/blogs.js";
 
 export const getAllBusiness = async (req: any, res: any, next: any) => {
   try {

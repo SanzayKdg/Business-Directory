@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../@config/constants.config.js";
 import { ObjectId } from "mongodb";
-import { User } from "../models/user.js";
+import { User } from "../models/Users/user.js";
 
 export const is_authenticated = async (req: any, res: any, next: any) => {
   try {

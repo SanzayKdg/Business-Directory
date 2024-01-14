@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_EXPIRE, JWT_SECRET } from "../@config/constants.config.js";
-import { Gender, UserRole } from "../@types/user.t.js";
+import { JWT_EXPIRE, JWT_SECRET } from "../../@config/constants.config.js";
+import { Gender, UserRole } from "../../@types/user.t.js";
 interface UserDocument extends Document {
   full_name: string;
   email: string;

@@ -1,8 +1,9 @@
-import { Business } from "../../models/business.js";
-import Reviews from "../../models/reviews.js";
-import { NewReviewDTO } from "./dto/ReviewsDto.js";
+import { Business } from "../../models/Business/business.js";
+import Reviews from "../../models/Business/business.reviews.js";
+import { NewReviewDTO } from "./dto/business.dto.js";
 import { ObjectId } from "mongodb";
 import { validate } from "class-validator";
+import { BusinessAccountStatus } from "../../@types/business.t.js";
 
 // ---------------------- ADD NEW REVIEW (PUBLC -- AUTH) ---------------------------------
 
@@ -30,7 +31,11 @@ export const newReview = async (req: any, res: any, next: any) => {
       );
     }
     // find business if exists
-    const business = await Business.findOne({ _id: req.params.id });
+    const business = await Business.findOne({
+      _id: req.params.id,
+      is_verified: true,
+      account_status: BusinessAccountStatus.APPROVED,
+    });
     if (!business) {
       return next(
         res
@@ -47,9 +52,6 @@ export const newReview = async (req: any, res: any, next: any) => {
       // update the existing review
       reviews.comment = comment;
       reviews.rating = rating;
-      reviews.user = new ObjectId(req.user._id);
-      reviews.business = new ObjectId(req.params.id);
-
       await reviews.save();
     } else {
       // if no user found. then create new review.
@@ -89,7 +91,7 @@ export const getAllReviews = async (req: any, res: any, next: any) => {
   }
 };
 
-// ---------------------- GET ALL REVIEW (PUBLC -- AUTH) ---------------------------------
+// ---------------------- DELETE A REVIEW (PUBLC -- AUTH) ---------------------------------
 export const deleteReview = async (req: any, res: any, next: any) => {
   try {
     const reviews = await Reviews.findOne({

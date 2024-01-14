@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsInt,
   IsLatitude,
   IsLongitude,
   IsNotEmpty,
@@ -136,4 +137,14 @@ export class UpdateBusinessDTO {
   @IsLongitude()
   @IsOptional()
   longitude!: number;
+}
+
+export class NewReviewDTO {
+  @IsInt()
+  @IsNotEmpty()
+  rating!: number;
+
+  @IsString()
+  @IsNotEmpty()
+  comment!: string;
 }

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { BlogCategory, BlogStatus } from "../@types/blogs.t.js";
+import { BlogCategory, BlogStatus } from "../../@types/blogs.t.js";
 
 const blogSchmea = new mongoose.Schema(
   {

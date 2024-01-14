@@ -7,6 +7,11 @@ import {
   registerBusiness,
   updateBusiness,
 } from "../controllers/Business/business.js";
+import {
+  newReview,
+  getAllReviews,
+  deleteReview,
+} from "../controllers/Business/business.reviews.js";
 import { roles } from "../middlewares/roles.js";
 import { upload } from "../middlewares/multer.js";
 const router = express.Router();
@@ -24,5 +29,15 @@ router
 
 router.route("/all").get(getAllBusiness);
 router.route("/:id").get(getSingleBusiness);
+
+
+// ---------------------- REVIEWS ENDPOINT ---------------------------------
+// ---------------------- PUBLIC ENDPOINT (AUTH) ---------------------------------
+
+router.route("/reviews/new/:id").post(is_authenticated, newReview);
+router.route("/reviews/:id").delete(is_authenticated, deleteReview);
+
+// ---------------------- PUBLIC ENDPOINT (NO AUTH) ---------------------------------
+router.route("/reviews/all/:id").get(getAllReviews);
 
 export default router;

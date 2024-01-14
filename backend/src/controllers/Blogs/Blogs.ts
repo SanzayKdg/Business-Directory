@@ -1,6 +1,6 @@
 import { validate } from "class-validator";
 import { CreateBlogDTO, UpdateBlogDTO } from "./dto/BlogDto.js";
-import Blog from "../../models/blogs.js";
+import Blog from "../../models/Blog/blogs.js";
 import slugify from "slugify";
 import { BlogStatus } from "../../@types/blogs.t.js";
 import * as fs from "fs";

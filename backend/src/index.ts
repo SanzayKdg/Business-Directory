@@ -9,7 +9,6 @@ import Auth from "./routes/auth.js";
 import Users from "./routes/users.js";
 import Business from "./routes/business.js";
 import Admin from "./routes/admin.js";
-import Reviews from "./routes/reviews.js";
 import Blogs from "./routes/blogs.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
@@ -34,7 +33,6 @@ app.use("/api/auth", Auth);
 app.use("/api/users", Users);
 app.use("/api/business", Business);
 app.use("/api/admin", Admin);
-app.use("/api/reviews", Reviews);
 app.use("/api/blogs", Blogs);
 
 // listener

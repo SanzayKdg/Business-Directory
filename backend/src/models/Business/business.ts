@@ -3,7 +3,7 @@ import {
   BusinessAccountStatus,
   BusinessAmenities,
   BusinessTimings,
-} from "../@types/business.t.js";
+} from "../../@types/business.t.js";
 import { Point } from "geojson";
 
 interface BusinessDocument extends Document {

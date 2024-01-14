@@ -1,4 +1,4 @@
-import { User } from "../../models/user.js";
+import { User } from "../../models/Users/user.js";
 import sendToken from "../../@helpers/sendToken.js";
 import {
   RequestResetPasswordDTO,

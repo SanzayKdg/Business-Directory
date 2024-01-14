@@ -5,7 +5,7 @@ import { defualtMailTemplate } from "../../@helpers/mailTemplate.js";
 import { validate } from "class-validator";
 import sendToken from "../../@helpers/sendToken.js";
 import { NextFunction, Request, Response } from "express";
-import { User } from "../../models/user.js";
+import { User } from "../../models/Users/user.js";
 import { CreateUserDto, LoginDto, VerifyEmailDto } from "./dto/auth.dto.js";
 
 // ---------------------- REGISTER ---------------------------------
