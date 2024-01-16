@@ -1,15 +1,35 @@
 import {
-  Button, Input, RangeSlider, RangeSliderFilledTrack,
-  RangeSliderThumb, RangeSliderTrack, Select
+  Button,
+  Input,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Select,
 } from "@chakra-ui/react";
 import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import StarRatings from "react-star-ratings";
 import ListingCard from "../../Layout/ListingCard/ListingCard";
-import { business__categories } from "../../dummydata";
+// import { business__categories } from "../../dummydata";
 import "./Listings.css";
+import { useEffect, useState } from "react";
+import { baseUrl } from "../../@config/config";
 
 const Listings = () => {
+  const [newObj, setNewObj] = useState({ success: false, business: [] });
+  useEffect(() => {
+    const getAllBusiness = async () => {
+      const response = await fetch(`${baseUrl}/business/all`);
+      const data = await response.json();
+
+      setNewObj({ success: data.success, business: data.businesses });
+    };
+
+    getAllBusiness();
+  }, []);
+
+  console.log(newObj);
   return (
     <div className="listing__container">
       <div className="listing__header">
@@ -18,6 +38,7 @@ const Listings = () => {
           1.118.940.376 The best service package is waiting for you
         </p>
       </div>
+
       <div className="listing__bottom">
         {/* ---------------------- LISTING - FILTERS  ------------------------------------- */}
 
@@ -122,8 +143,8 @@ const Listings = () => {
           </div>
 
           <div className="listings__cards__container">
-            {business__categories &&
-              business__categories.map((item, index) => (
+            {newObj.business &&
+              newObj.business.map((item, index) => (
                 <ListingCard key={index} item={item} index={index} />
               ))}
           </div>

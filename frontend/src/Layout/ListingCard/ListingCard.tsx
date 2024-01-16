@@ -4,14 +4,17 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import StarRating from "react-star-ratings";
 import "./ListingCard.css";
+import { baseUrl } from "../../@config/config";
+
 const ListingCard = (props: any) => {
   const { item, index } = props;
+  console.log(`${baseUrl}/${item.image}`, "in listing card")
   return (
     <Link key={index} to={"/"} className="services__card">
       <div className="services__top">
         <Image
           className="service__background"
-          src={item.image[0]}
+          src={baseUrl+item.image[0]}
           alt="Business Image"
         />
       </div>
@@ -27,7 +30,8 @@ const ListingCard = (props: any) => {
           </p>
           <div className="ratings">
             <StarRating
-              rating={item.ratings}
+              // rating={item.ratings}
+              rating={5}
               starRatedColor="#f6c914"
               starDimension="18px"
               starSpacing="1px"
@@ -40,22 +44,22 @@ const ListingCard = (props: any) => {
             </div>
             <div className="service__phone">
               <FaPhoneAlt size={18} className="service__icon" />
-              <p className="service__address">(+12) 345-678-910</p>
+              <p className="service__address">{item.contact}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="services__bottom">
         <p className="service__category p__text">
-          <b>Restaurant</b>
+          <b>{item.category}</b>
         </p>
 
         <p
           className={`service__open__status p__text ${
-            item.open_status ? "green__text" : "red__text"
+            item.is_online ? "green__text" : "red__text"
           } `}
         >
-          <b>{item.open_status ? "Open" : "Closed"}</b>
+          <b>{item.is_online ? "Open" : "Closed"}</b>
         </p>
       </div>
     </Link>

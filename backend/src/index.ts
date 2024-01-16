@@ -10,6 +10,7 @@ import Users from "./routes/users.js";
 import Business from "./routes/business.js";
 import Admin from "./routes/admin.js";
 import Blogs from "./routes/blogs.js";
+import ContactUs from "./routes/contactus.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import "reflect-metadata";
@@ -23,9 +24,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
 app.use("/uploads", express.static("uploads"));
+
+
 app.use(helmet());
 
 // ------------------------------ ROUTES ----------------------------------------------
@@ -34,6 +43,7 @@ app.use("/api/users", Users);
 app.use("/api/business", Business);
 app.use("/api/admin", Admin);
 app.use("/api/blogs", Blogs);
+app.use("/api/contact", ContactUs);
 
 // listener
 const server = app.listen(PORT, () => {
@@ -58,4 +68,3 @@ process.on("unhandledRejection", (err: any) => {
     process.exit(1);
   });
 });
- 

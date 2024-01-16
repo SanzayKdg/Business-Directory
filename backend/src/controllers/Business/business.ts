@@ -126,7 +126,7 @@ export const getAllBusiness = async (req: any, res: any, next: any) => {
       is_verified: true,
       account_status: BusinessAccountStatus.APPROVED,
     });
-    const result = business.map((item) => {
+    const businesses = business.map((item) => {
       return {
         image: item.image[0],
         logo: item.logo,
@@ -141,7 +141,7 @@ export const getAllBusiness = async (req: any, res: any, next: any) => {
         is_featured: item.is_featured,
       };
     });
-    return res.status(200).json({ success: true, result });
+    return res.status(200).json({ success: true, businesses });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }
