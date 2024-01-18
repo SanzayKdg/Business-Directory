@@ -1,59 +1,68 @@
 .services__card {
-    border-radius: 10px;
-    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
 }
 
 .service__background {
-    border-radius: 10px 10px 0 0;
-}
-
-.services__logo {
-    position: relative;
-    bottom: 2rem;
-    width: 100%;
-    padding: 0 2rem;
-    margin-bottom: -2rem;
+  border-radius: 10px 10px 0 0;
+  height: 300px;
+  width: 100%;
 }
 
 .service__logo {
-    width: 4rem;
+  border-radius: 50%;
+  height: 3.5rem;
+  width: 3.5rem;
+  position: relative;
+  bottom: 1.7rem;
+  border: 3px solid #fff;
+
 }
 
 .services__mid {
-    padding: 0 1.5rem;
+  padding-right: 0.5rem;
+  padding-left: 1rem;
 }
 
+.service__details{
+    margin-top: -1rem;
+    padding-left: 0.5rem;
+    width: 100%;
+}
 
 .business__name {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .service__location {
-    display: flex;
-    margin-top: 1rem;
+  display: flex;
+  margin-top: 1rem;
 }
-
+.location__icon{
+    margin-top: 5px;
+}
 .service__icon {
-    color: var(--black-75);
-    margin-right: 10px;
+  color: var(--black-50);
+  margin-right: 10px;
+  font-size: 16px;
 }
 
 .service__address {
-    font-size: 14px;
-    font-family: var(--base-font-family);
-    font-weight: var(--base-font-weight);
+  font-size: 16px;
+  font-family: var(--base-font-family);
+  font-weight: var(--base-font-weight);
 }
 
 .service__phone {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .services__bottom {
-    margin-top: 1rem;
-    border-top: 1px solid var(--black-25);
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 2rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--black-25);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2rem;
 }

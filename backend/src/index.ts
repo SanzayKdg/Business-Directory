@@ -14,6 +14,7 @@ import ContactUs from "./routes/contactus.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import "reflect-metadata";
+import path from "path";
 const app = express();
 
 // ------------------------------ DATABASE CONNECTION ----------------------------------------------
@@ -32,8 +33,7 @@ app.use(
   })
 );
 app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
-app.use("/uploads", express.static("uploads"));
-
+app.use("/src/uploads", express.static(process.cwd() + "/src/uploads"));
 
 app.use(helmet());
 

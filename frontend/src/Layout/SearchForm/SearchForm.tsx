@@ -7,7 +7,6 @@ import "./SearchForm.css";
 
 const SearchForm = (props: any) => {
   const { heading, description, categories_filter } = props;
-  console.log(heading, description, categories_filter);
   return (
     <div className="search__form__container">
       <div className="home__top">

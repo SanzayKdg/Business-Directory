@@ -4,26 +4,21 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import StarRating from "react-star-ratings";
 import "./ListingCard.css";
-import { baseUrl } from "../../@config/config";
 
 const ListingCard = (props: any) => {
   const { item, index } = props;
-  console.log(`${baseUrl}/${item.image}`, "in listing card")
   return (
     <Link key={index} to={"/"} className="services__card">
       <div className="services__top">
         <Image
           className="service__background"
-          src={baseUrl+item.image[0]}
+          src={item.image}
           alt="Business Image"
         />
       </div>
 
-      <div className="services__logo">
-        <Image className="service__logo" src={item.logo} />
-      </div>
-
       <div className="services__mid">
+        <Image className="service__logo" src={item.logo} />
         <div className="service__details">
           <p className="p__text business__name">
             <b>{item.name}</b>
@@ -39,12 +34,12 @@ const ListingCard = (props: any) => {
           </div>
           <div className="home__service__contact">
             <div className="service__location">
-              <FaLocationDot size={24} className="service__icon" />
+              <FaLocationDot className="service__icon location__icon" />
               <p className="service__address">{item.address}</p>
             </div>
             <div className="service__phone">
-              <FaPhoneAlt size={18} className="service__icon" />
-              <p className="service__address">{item.contact}</p>
+              <FaPhoneAlt className="service__icon" />
+              <p className="service__address">(+977) {item.contact}</p>
             </div>
           </div>
         </div>

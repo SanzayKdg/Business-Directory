@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 import { Point } from "typeorm";
 import { BusinessAccountStatus } from "../../@types/business.t.js";
 import * as fs from "fs";
+import { BASE_URL } from "../../@config/constants.config.js";
 
 // ---------------------- REGISTER BUSINESS ---------------------------------
 
@@ -126,10 +127,11 @@ export const getAllBusiness = async (req: any, res: any, next: any) => {
       is_verified: true,
       account_status: BusinessAccountStatus.APPROVED,
     });
+
     const businesses = business.map((item) => {
       return {
-        image: item.image[0],
-        logo: item.logo,
+        image: BASE_URL.backend + item.image[0].replace(/\\/g, '/'),
+        logo: BASE_URL.backend + item.logo.replace(/\\/g, '/'), 
         name: item.name,
         // ratings: item.ratings,
         address: item.address,

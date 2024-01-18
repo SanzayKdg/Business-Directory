@@ -1,5 +1,13 @@
+.header__container{
+    border: 2px solid red;
+    height: 75%;
+}
+
+
 .background__image {
     filter: brightness(50%)blur(2px);
+    height: 48rem;
+    width: 100%;
 }
 
 .header__contents {

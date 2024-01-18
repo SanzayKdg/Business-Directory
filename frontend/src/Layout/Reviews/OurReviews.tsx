@@ -52,7 +52,6 @@ const OurReviews = () => {
     setActiveIndex(!activeIndex ? reviews.length - 1 : activeIndex - 1);
   };
 
-  console.log(activeIndex);
   const Carousel = () => {
     return (
       <div className="user__reviews">

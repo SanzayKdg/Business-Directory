@@ -11,25 +11,24 @@ import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import StarRatings from "react-star-ratings";
 import ListingCard from "../../Layout/ListingCard/ListingCard";
-// import { business__categories } from "../../dummydata";
 import "./Listings.css";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../@config/config";
 
 const Listings = () => {
-  const [newObj, setNewObj] = useState({ success: false, business: [] });
+  const [listings, setListings] = useState({ success: false, business: [] });
   useEffect(() => {
     const getAllBusiness = async () => {
       const response = await fetch(`${baseUrl}/business/all`);
       const data = await response.json();
 
-      setNewObj({ success: data.success, business: data.businesses });
+      setListings({ success: data.success, business: data.businesses });
     };
 
     getAllBusiness();
   }, []);
 
-  console.log(newObj);
+
   return (
     <div className="listing__container">
       <div className="listing__header">
@@ -139,12 +138,12 @@ const Listings = () => {
 
         <div className="all__listings">
           <div className="all__listing__heading">
-            <h3 className="p__text">5432 Listings are available</h3>
+            <h3 className="p__text">{listings.business.length} Listings are available</h3>
           </div>
 
           <div className="listings__cards__container">
-            {newObj.business &&
-              newObj.business.map((item, index) => (
+            {listings.business &&
+              listings.business.map((item, index) => (
                 <ListingCard key={index} item={item} index={index} />
               ))}
           </div>

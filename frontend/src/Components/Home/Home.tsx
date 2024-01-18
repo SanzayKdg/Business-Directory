@@ -1,24 +1,38 @@
 import { Image } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ListingCard from "../../Layout/ListingCard/ListingCard";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
 import "./Home.css";
-import {business__categories, blogs} from "../../dummydata"
+import { business__categories, blogs } from "../../dummydata";
+import { baseUrl } from "../../@config/config";
+import { FetchType } from "../../@config/types";
+
 
 
 const Home = () => {
+  const [listings, setListings] = useState<FetchType>();
+  useEffect(() => {
+    const getAllBusiness = async () => {
+      const response = await fetch(`${baseUrl}/business/all`);
+      const data = await response.json();
+
+      setListings({ success: data.success, business: data.businesses });
+    };
+
+    getAllBusiness();
+  }, []);
+
   const [activeCategory, setActiveCategory] = useState("");
-  
 
   const popular__categories = business__categories.filter(
     (category) => category.is__popular
   );
 
-  const most__searched = business__categories.slice(0, 6);
-
+  const most__searched = listings?.business.slice(0, 6);
+  console.log(most__searched, "most searched");
   return (
     <div className="home__container">
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
@@ -87,7 +101,9 @@ const Home = () => {
               most__searched.map((item) => (
                 <li
                   className={`p__text filter__category ${
-                    item.category === activeCategory ? "active__category" : ""
+                    item.category === activeCategory
+                      ? "active__category"
+                      : ""
                   }`}
                   onClick={() => setActiveCategory(item.category)}
                   key={item.category}
@@ -98,61 +114,9 @@ const Home = () => {
           </ul>
 
           <div className="home__services__container">
-            {most__searched &&
-              most__searched.map((item, index) => (
+            {listings?.business &&
+              listings?.business.map((item, index) => (
                 <ListingCard key={index} item={item} index={index} />
-                // <Link key={index} to={"/"} className="services__card">
-                //   <div className="services__top">
-                //     <Image
-                //       className="service__background"
-                //       src={item.image[0]}
-                //       alt="Business Image"
-                //     />
-                //   </div>
-
-                //   <div className="services__logo">
-                //     <Image className="service__logo" src={item.logo} />
-                //   </div>
-
-                //   <div className="services__mid">
-                //     <div className="service__details">
-                //       <p className="p__text business__name">
-                //         <b>{item.name}</b>
-                //       </p>
-                //       <div className="ratings">
-                //         <StarRating
-                //           rating={item.ratings}
-                //           starRatedColor="#f6c914"
-                //           starDimension="18px"
-                //           starSpacing="1px"
-                //         />
-                //       </div>
-                //       <div className="home__service__contact">
-                //         <div className="service__location">
-                //           <FaLocationDot size={24} className="service__icon" />
-                //           <p className="service__address">{item.address}</p>
-                //         </div>
-                //         <div className="service__phone">
-                //           <FaPhoneAlt size={18} className="service__icon" />
-                //           <p className="service__address">(+12) 345-678-910</p>
-                //         </div>
-                //       </div>
-                //     </div>
-                //   </div>
-                //   <div className="services__bottom">
-                //     <p className="service__category p__text">
-                //       <b>Restaurant</b>
-                //     </p>
-
-                //     <p
-                //       className={`service__open__status p__text ${
-                //         item.open_status ? "green__text" : "red__text"
-                //       } `}
-                //     >
-                //       <b>{item.open_status ? "Open" : "Closed"}</b>
-                //     </p>
-                //   </div>
-                // </Link>
               ))}
           </div>
         </div>
