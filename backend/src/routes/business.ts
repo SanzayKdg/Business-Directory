@@ -28,7 +28,7 @@ router
 // ---------------------- PUBLIC ENDPOINT ---------------------------------
 
 router.route("/all").get(getAllBusiness);
-router.route("/:id").get(getSingleBusiness);
+router.route("/:slug").get(getSingleBusiness);
 
 
 // ---------------------- REVIEWS ENDPOINT ---------------------------------

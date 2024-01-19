@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Input,
@@ -6,28 +7,42 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import StarRatings from "react-star-ratings";
 import ListingCard from "../../Layout/ListingCard/ListingCard";
 import "./Listings.css";
-import { useEffect, useState } from "react";
-import { baseUrl } from "../../@config/config";
+import { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBusiness } from "../../features/Business/Business";
+import { BusinessType } from "../../@config/types";
 
 const Listings = () => {
-  const [listings, setListings] = useState({ success: false, business: [] });
+  const {
+    businesses,
+    message: error,
+    loading,
+  } = useSelector((state: any) => state.business);
+  const dispatch: any = useDispatch();
+  const toast = useToast();
   useEffect(() => {
-    const getAllBusiness = async () => {
-      const response = await fetch(`${baseUrl}/business/all`);
-      const data = await response.json();
+    dispatch(getAllBusiness());
+  }, [dispatch]);
 
-      setListings({ success: data.success, business: data.businesses });
-    };
-
-    getAllBusiness();
-  }, []);
-
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        isClosable: true,
+      });
+    }
+  }, [error, toast]);
 
   return (
     <div className="listing__container">
@@ -136,18 +151,24 @@ const Listings = () => {
 
         {/* ---------------------- LISTING - CARDS  ------------------------------------- */}
 
-        <div className="all__listings">
-          <div className="all__listing__heading">
-            <h3 className="p__text">{listings.business.length} Listings are available</h3>
-          </div>
+        {loading ? (
+          <p>loading</p>
+        ) : (
+          <div className="all__listings">
+            <div className="all__listing__heading">
+              <h3 className="p__text">
+                {businesses.length} Listings are available
+              </h3>
+            </div>
 
-          <div className="listings__cards__container">
-            {listings.business &&
-              listings.business.map((item, index) => (
-                <ListingCard key={index} item={item} index={index} />
-              ))}
+            <div className="listings__cards__container">
+              {businesses &&
+                businesses.map((item: BusinessType, index: number) => (
+                  <ListingCard key={index} item={item} index={index} />
+                ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

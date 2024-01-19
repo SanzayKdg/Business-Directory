@@ -10,6 +10,7 @@ interface BusinessDocument extends Document {
   opening_hours: BusinessTimings;
   amenity: BusinessAmenities;
   name: string;
+  slug: string;
   description: string;
   logo: any;
   image: any[];
@@ -36,6 +37,11 @@ const businessSchema = new mongoose.Schema<BusinessDocument>(
     name: {
       type: String,
       required: [true, "Please enter your business name."],
+    },
+    slug: {
+      type: String,
+      required: [true, "Please enter slug name"],
+      unique: true,
     },
     description: {
       type: String,

@@ -6,6 +6,7 @@ import { Point } from "typeorm";
 import { BusinessAccountStatus } from "../../@types/business.t.js";
 import * as fs from "fs";
 import { BASE_URL } from "../../@config/constants.config.js";
+import { slugify } from "../../@helpers/slugify.js";
 
 // ---------------------- REGISTER BUSINESS ---------------------------------
 
@@ -93,6 +94,7 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
 
     const new_business = await Business.create({
       name,
+      slug: slugify(name),
       description,
       logo,
       image,
@@ -130,9 +132,10 @@ export const getAllBusiness = async (req: any, res: any, next: any) => {
 
     const businesses = business.map((item) => {
       return {
-        image: BASE_URL.backend + item.image[0].replace(/\\/g, '/'),
-        logo: BASE_URL.backend + item.logo.replace(/\\/g, '/'), 
+        image: BASE_URL.backend + item.image[0].replace(/\\/g, "/"),
+        logo: BASE_URL.backend + item.logo.replace(/\\/g, "/"),
         name: item.name,
+        slug: item.slug,
         // ratings: item.ratings,
         address: item.address,
         contact: item.phone_number,
@@ -153,14 +156,31 @@ export const getAllBusiness = async (req: any, res: any, next: any) => {
 
 export const getSingleBusiness = async (req: any, res: any, next: any) => {
   try {
-    const { id } = req.params;
+    let { slug } = req.params;
     const business: any = await Business.findOne({
-      id,
+      slug,
       is_verified: true,
       account_status: BusinessAccountStatus.APPROVED,
     });
-
-    return res.status(200).json({ success: true, business });
+    const result = {
+      business_location: business.business_location,
+      name: business.name,
+      description: business.description,
+      logo: business.logo,
+      image: business.image,
+      phone_number: business.phone_number,
+      telephone: business.telephone,
+      website: business.website,
+      category: business.category,
+      social_links: business.social_links,
+      address: business.address,
+      is_featured: business.is_featured,
+      is_popular: business.is_popular,
+      is_online: business.is_online,
+      is_verified: business.is_verified,
+      slug: business.slug,
+    };
+    return res.status(200).json({ success: true, business: result });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -269,17 +289,18 @@ export const updateBusiness = async (req: any, res: any, next: any) => {
 
     // save business
     const updated_business = {
-      name,
-      description,
-      logo,
-      image,
-      phone_number,
-      telephone,
-      website,
-      opening_hours,
-      amenity,
-      social_links,
-      address,
+      name: payload.name,
+      slug: slugify(name),
+      description: payload.description,
+      logo: payload.logo,
+      image: payload.image,
+      phone_number: payload.phone_number,
+      telephone: payload.telephone,
+      website: payload.website,
+      opening_hours: payload.opening_hours,
+      amenity: payload.amenity,
+      social_links: payload.social_links,
+      address: payload.address,
       business_location: location,
     };
 

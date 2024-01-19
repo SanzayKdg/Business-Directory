@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Image } from "@chakra-ui/react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -8,7 +9,7 @@ import "./ListingCard.css";
 const ListingCard = (props: any) => {
   const { item, index } = props;
   return (
-    <Link key={index} to={"/"} className="services__card">
+    <Link key={index} to={`/listing/${item.slug}`} className="services__card">
       <div className="services__top">
         <Image
           className="service__background"

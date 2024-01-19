@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,32 +8,30 @@ import OurReviews from "../../Layout/Reviews/OurReviews";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
 import "./Home.css";
 import { business__categories, blogs } from "../../dummydata";
-import { baseUrl } from "../../@config/config";
-import { FetchType } from "../../@config/types";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBusiness } from "../../features/Business/Business";
+import { BusinessType, SingleBusiness } from "../../@config/types";
 
 const Home = () => {
-  const [listings, setListings] = useState<FetchType>();
-  useEffect(() => {
-    const getAllBusiness = async () => {
-      const response = await fetch(`${baseUrl}/business/all`);
-      const data = await response.json();
-
-      setListings({ success: data.success, business: data.businesses });
-    };
-
-    getAllBusiness();
-  }, []);
-
   const [activeCategory, setActiveCategory] = useState("");
 
   const popular__categories = business__categories.filter(
     (category) => category.is__popular
   );
 
-  const most__searched = listings?.business.slice(0, 6);
-  console.log(most__searched, "most searched");
+  const {
+    businesses,
+    message: error,
+    loading,
+  } = useSelector((state: any) => state.business);
+  const dispatch: any = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllBusiness());
+  }, [dispatch]);
+
+  const most__searched = businesses.slice(0, 6);
+  console.log(most__searched, "most searched", loading, error);
   return (
     <div className="home__container">
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
@@ -98,12 +97,10 @@ const Home = () => {
         <div className="home__services__link">
           <ul className="filter__services__items">
             {most__searched &&
-              most__searched.map((item) => (
+              most__searched.map((item: SingleBusiness) => (
                 <li
                   className={`p__text filter__category ${
-                    item.category === activeCategory
-                      ? "active__category"
-                      : ""
+                    item.category === activeCategory ? "active__category" : ""
                   }`}
                   onClick={() => setActiveCategory(item.category)}
                   key={item.category}
@@ -114,8 +111,8 @@ const Home = () => {
           </ul>
 
           <div className="home__services__container">
-            {listings?.business &&
-              listings?.business.map((item, index) => (
+            {businesses &&
+              businesses.map((item: BusinessType, index: number) => (
                 <ListingCard key={index} item={item} index={index} />
               ))}
           </div>
