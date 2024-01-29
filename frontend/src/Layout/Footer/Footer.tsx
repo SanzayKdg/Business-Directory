@@ -9,7 +9,7 @@ import { FaGooglePlay, FaApple } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="footer__container">
+    <footer className="footer__container">
       <div className="footer__top">
         <div className="footer__section">
           <Link to="/" className="footer__logo">
@@ -101,7 +101,7 @@ const Footer = () => {
           reserved
         </p>
       </div>
-    </div>
+    </footer>
   );
 };
 export default Footer;

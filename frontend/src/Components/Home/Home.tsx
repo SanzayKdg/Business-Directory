@@ -33,7 +33,14 @@ const Home = () => {
   const most__searched = businesses.slice(0, 6);
   console.log(most__searched, "most searched", loading, error);
   return (
-    <div className="home__container">
+    <section className="home__container">
+      <div className="home__bg">
+        <Image
+          src="/background/bg1.jpg"
+          alt="background image"
+          className="background__image"
+        />
+      </div>
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
       <div className="home__form">
         <SearchForm
@@ -279,7 +286,7 @@ const Home = () => {
       <div className="home__newsletter px__16">
         <Newsletter />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,23 +1,13 @@
-.header__container{
-    border: 2px solid red;
-    height: 75%;
-}
-
-
-.background__image {
-    filter: brightness(50%)blur(2px);
-    height: 48rem;
-    width: 100%;
-}
 
 .header__contents {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    top: 0;
     padding: 2rem 8rem;
+    position: relative;
+    top: 0;
+    z-index: 1;
 }
 
 .header__logo {
