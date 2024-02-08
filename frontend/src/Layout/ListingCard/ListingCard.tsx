@@ -1,15 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Image } from "@chakra-ui/react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import StarRating from "react-star-ratings";
 import "./ListingCard.css";
+import { ListingCardType } from "../../types/Props/props.types";
 
-const ListingCard = (props: any) => {
-  const { item, index } = props;
+const ListingCard = (props: ListingCardType) => {
+  const { item } = props;
   return (
-    <Link key={index} to={`/listing/${item.slug}`} className="services__card">
+    <Link
+      key={item.name}
+      to={`/listing/${item.slug}`}
+      className="services__card"
+    >
       <div className="services__top">
         <Image
           className="service__background"

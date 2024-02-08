@@ -12,14 +12,12 @@ import {
   ValidateNested,
 } from "class-validator";
 import {
-  BusinessAmenities,
   BusinessTimings,
 } from "../../../@types/business.t.js";
 
 export class SocialLinksDTO {
   @IsString()
   name!: string;
-
   @IsUrl()
   url!: string;
 }
@@ -66,7 +64,7 @@ export class RegisterBusinessDTO {
 
   @IsOptional()
   @ValidateNested()
-  amenity?: BusinessAmenities[];
+  amenity?: string[];
 
   @IsOptional()
   @IsArray()
@@ -120,7 +118,7 @@ export class UpdateBusinessDTO {
 
   @IsOptional()
   @ValidateNested()
-  amenity?: BusinessAmenities[];
+  amenity!: string[];
 
   @IsOptional()
   @IsArray()

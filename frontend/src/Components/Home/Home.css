@@ -3,13 +3,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
     margin-top: -10rem;
 }
 
-.background__image {
+.homebg__image {
     filter: brightness(50%)blur(2px);
-    height: 48rem;
+    height: 100vh;
     width: 100vw;
     z-index: -1;
 }
@@ -295,12 +294,8 @@
 .home__newsletter {
     margin-top: 8rem;
     width: 100%;
-    padding: 4rem 0;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     background-color: #f9f9f9;
 }
 
-.px__16 {
-    padding-left: 16rem;
-    padding-right: 16rem;
-
-}

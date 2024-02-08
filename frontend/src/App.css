@@ -6,19 +6,16 @@
     padding: 0;
 }
 
-
 .p__text {
     font-family: var(--base-font-family);
     font-size: var(--p-font-size);
     line-height: var(--p-line-height);
     font-weight: var(--base-font-weight);
-
 }
 
 .text__center {
     text-align: center;
 }
-
 
 .h1__text {
     font-family: var(--base-font-family);
@@ -53,6 +50,19 @@
 
 .red__text {
     color: #f03250;
-    ;
 }
 
+.px__8 {
+    padding-left: 8rem;
+    padding-right: 8rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-family: var(--base-font-family);
+}

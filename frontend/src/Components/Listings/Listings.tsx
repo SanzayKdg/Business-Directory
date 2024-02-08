@@ -1,51 +1,42 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
+  Image,
   Input,
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
   RangeSliderTrack,
   Select,
-  useToast,
 } from "@chakra-ui/react";
+
+import { useEffect, useState } from "react";
 import { FaChevronDown, FaSearch } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import StarRatings from "react-star-ratings";
-import ListingCard from "../../Layout/ListingCard/ListingCard";
 import "./Listings.css";
-import { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getAllBusiness } from "../../features/Business/Business";
-import { BusinessType } from "../../@config/types";
-
+import ListingCard from "../../Layout/ListingCard/ListingCard";
+import { AllListings } from "../../types/BusinessTypes";
+import { getAllBusiness } from "../../services/business/business";
 const Listings = () => {
-  const {
-    businesses,
-    message: error,
-    loading,
-  } = useSelector((state: any) => state.business);
-  const dispatch: any = useDispatch();
-  const toast = useToast();
+  const [listings, setListings] = useState<AllListings[] | []>([]);
   useEffect(() => {
-    dispatch(getAllBusiness());
-  }, [dispatch]);
+    const fetchListings = async () => {
+      const businesses = await getAllBusiness();
+      setListings(businesses);
+    };
 
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: error.message,
-        status: "error",
-        isClosable: true,
-      });
-    }
-  }, [error, toast]);
+    fetchListings();
+  }, []);
 
   return (
     <div className="listing__container">
+      <div className="home__bg">
+        <Image
+          src="/background/bg1.jpg"
+          alt="background image"
+          className="listingsbg__image"
+        />
+      </div>
       <div className="listing__header">
         <h1 className="h1__text light__text text__center">Our Listings</h1>
         <p className="p__text light__text text__center">
@@ -151,24 +142,17 @@ const Listings = () => {
 
         {/* ---------------------- LISTING - CARDS  ------------------------------------- */}
 
-        {loading ? (
-          <p>loading</p>
-        ) : (
-          <div className="all__listings">
-            <div className="all__listing__heading">
-              <h3 className="p__text">
-                {businesses.length} Listings are available
-              </h3>
-            </div>
-
-            <div className="listings__cards__container">
-              {businesses &&
-                businesses.map((item: BusinessType, index: number) => (
-                  <ListingCard key={index} item={item} index={index} />
-                ))}
-            </div>
+        <div className="all__listings">
+          <div className="all__listing__heading">
+            <h3 className="p__text">
+              {listings.length} Listings are available
+            </h3>
           </div>
-        )}
+
+          <div className="listings__cards__container">
+            {listings && listings.map((item) => <ListingCard item={item} />)}
+          </div>
+        </div>
       </div>
     </div>
   );

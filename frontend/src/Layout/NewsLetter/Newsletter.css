@@ -1,26 +1,31 @@
-.newsletter__container{
+.newsletter__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
 }
-.subscribe__heading{
-font-size: var(--h5-font-size);
-line-height: var(--h5-line-height);
-font-weight: bold;
-margin-bottom: 1rem;
+
+.subscribe__heading {
+    font-size: var(--h5-font-size);
+    line-height: var(--h5-line-height);
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
-.newsletter__form{
+.newsletter__right{
+    flex: 0.9;
+}
+.newsletter__form {
     display: flex;
     align-items: center;
 }
-.subscribe__email{
-    width: 25rem;
+
+.subscribe__email {
     padding: 1.5rem;
     background-color: #fff;
 }
-.subscribe__btn{
+
+.subscribe__btn {
     margin-left: 1rem;
-    padding: 1.5rem 3rem ;
+    padding: 1.5rem 3rem;
 }

@@ -5,7 +5,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import "./SearchForm.css";
 
-const SearchForm = (props: any) => {
+const SearchForm = (props) => {
   const { heading, description, categories_filter } = props;
   return (
     <div className="search__form__container">
@@ -72,7 +72,7 @@ const SearchForm = (props: any) => {
 
       <div className="home__filter">
         {categories_filter &&
-          categories_filter.map((item: any, index: number) => (
+          categories_filter.map((item, index) => (
             <Button
               key={index} //temporary
               style={{ marginLeft: "1rem" }}

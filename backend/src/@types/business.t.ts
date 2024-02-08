@@ -58,3 +58,5 @@ export class BusinessTimings {
     }
   ];
 }
+
+export const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];

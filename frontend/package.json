@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,7 +14,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@reduxjs/toolkit": "^2.0.1",
     "@types/react-star-ratings": "^2.3.3",
     "axios": "^1.6.5",
     "framer-motion": "^10.16.16",
@@ -22,10 +21,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "react-multi-carousel": "^2.8.4",
-    "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.1",
-    "react-star-ratings": "^2.3.0",
-    "redux": "^5.0.1"
+    "react-star-ratings": "^2.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.46",

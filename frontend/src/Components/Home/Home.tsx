@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,11 +5,10 @@ import ListingCard from "../../Layout/ListingCard/ListingCard";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
+import { blogs, business__categories } from "../../dummydata";
 import "./Home.css";
-import { business__categories, blogs } from "../../dummydata";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllBusiness } from "../../features/Business/Business";
-import { BusinessType, SingleBusiness } from "../../@config/types";
+import { AllListings } from "../../types/BusinessTypes";
+import { getAllBusiness } from "../../services/business/business";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -19,26 +17,25 @@ const Home = () => {
     (category) => category.is__popular
   );
 
-  const {
-    businesses,
-    message: error,
-    loading,
-  } = useSelector((state: any) => state.business);
-  const dispatch: any = useDispatch();
+  const [listings, setListings] = useState<AllListings[] | []>([]);
 
   useEffect(() => {
-    dispatch(getAllBusiness());
-  }, [dispatch]);
+    const fetchListings = async () => {
+      const businesses = await getAllBusiness();
+      setListings(businesses);
+    };
 
-  const most__searched = businesses.slice(0, 6);
-  console.log(most__searched, "most searched", loading, error);
+    fetchListings();
+  }, []);
+
+  const most__searched = listings.slice(0, 6);
   return (
     <section className="home__container">
       <div className="home__bg">
         <Image
           src="/background/bg1.jpg"
           alt="background image"
-          className="background__image"
+          className="homebg__image"
         />
       </div>
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
@@ -51,7 +48,7 @@ const Home = () => {
       </div>
       {/* ---------------------- HOME - POPULAR CATEGORIES  ------------------------------------- */}
 
-      <div className="home__popular__categories px__16">
+      <div className="home__popular__categories px__8">
         <div className="popular__categories__top">
           <h1 className="text__center black__text h1__text">
             Most Popular Categories
@@ -90,7 +87,7 @@ const Home = () => {
 
       {/* ---------------------- HOME - MOST SEARCHED CATEGORIES / SERVICES  ------------------------------------- */}
 
-      <div className="home__services px__16">
+      <div className="home__services px__8">
         <div className="home__services__top">
           <h1 className="black__text h1__text text__center">
             Most Searched Services
@@ -102,9 +99,10 @@ const Home = () => {
         </div>
 
         <div className="home__services__link">
+          {/* ---------------------------------- TODO --> FILTER MOST SEARCH ITEMS  --------------------------------------------------------- */}
           <ul className="filter__services__items">
             {most__searched &&
-              most__searched.map((item: SingleBusiness) => (
+              most__searched.map((item) => (
                 <li
                   className={`p__text filter__category ${
                     item.category === activeCategory ? "active__category" : ""
@@ -118,16 +116,14 @@ const Home = () => {
           </ul>
 
           <div className="home__services__container">
-            {businesses &&
-              businesses.map((item: BusinessType, index: number) => (
-                <ListingCard key={index} item={item} index={index} />
-              ))}
+            {most__searched &&
+              most__searched.map((item) => <ListingCard item={item} />)}
           </div>
         </div>
       </div>
 
       {/* ---------------------- HOME - HOW IT WORKS  ------------------------------------- */}
-      <div className="home__works__description px__16">
+      <div className="home__works__description px__8">
         <div className="home__works__top">
           <h1 className="black__text h1__text text__center">
             How Does It Work
@@ -185,7 +181,7 @@ const Home = () => {
       </div>
 
       {/* ---------------------- HOME - FEATURED LOCATION  ------------------------------------- */}
-      <div className="featured__location px__16">
+      <div className="featured__location px__8">
         <div className="featured__location__top">
           <h1 className="black__text h1__text text__center">
             Top Featured Location
@@ -233,13 +229,13 @@ const Home = () => {
 
       {/* ---------------------- HOME - OUR REVIEWS  ------------------------------------- */}
 
-      <div className="reviews__section px__16">
+      <div className="reviews__section px__8">
         <OurReviews />
       </div>
 
       {/* ---------------------- HOME - BLOGS / NEWS POST  ------------------------------------- */}
 
-      <div className="blogs__section px__16">
+      <div className="blogs__section px__8">
         <div className="home__works__top">
           <h1 className="black__text h1__text text__center">News Posts</h1>
           <h4 className="black__text p__text text__center">
@@ -282,8 +278,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ---------------------- HOME - BLOGS / NEWS POST  ------------------------------------- */}
-      <div className="home__newsletter px__16">
+      {/* ---------------------- HOME - NEWSLETTER  ------------------------------------- */}
+      <div className="home__newsletter px__8">
         <Newsletter />
       </div>
     </section>

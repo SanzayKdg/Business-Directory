@@ -1,9 +1,7 @@
 import { Business } from "../../models/Business/business.js";
 import { ObjectId } from "mongodb";
-import { RegisterBusinessDTO, UpdateBusinessDTO } from "./dto/business.dto.js";
-import { validate } from "class-validator";
 import { Point } from "typeorm";
-import { BusinessAccountStatus } from "../../@types/business.t.js";
+import { BusinessAccountStatus, DAYS } from "../../@types/business.t.js";
 import * as fs from "fs";
 import { BASE_URL } from "../../@config/constants.config.js";
 import { slugify } from "../../@helpers/slugify.js";
@@ -21,7 +19,6 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
       website,
       category,
       opening_hours,
-      amenity,
       social_links,
       address,
       latitude,
@@ -31,46 +28,12 @@ export const registerBusiness = async (req: any, res: any, next: any) => {
     // Handle Single Image
     const logo = req.files["logo"][0].path;
     let image: any = [];
-
+    const amenity: string[] = req.body;
     // Handle Multiple Image
     const images = req.files["image"];
     images.forEach((item: any) => image.push(item.path));
 
-    const payload = new RegisterBusinessDTO();
-    payload.name = name;
-    payload.description = description;
-    payload.logo = logo;
-    payload.image = image;
-    payload.phone_number = phone_number;
-    payload.telephone = telephone;
-    payload.vat_number = vat_number;
-    payload.website = website;
-    payload.category = category;
-    payload.opening_hours = opening_hours;
-    payload.amenity = amenity;
-    payload.social_links = social_links;
-    payload.address = address;
-    payload.latitude = latitude;
-    payload.longitude = longitude;
-
-    // Validation
-    const errors = await validate(payload);
-
-    if (errors.length > 0) {
-      const validation_error = errors.reduce((acc: any, error) => {
-        // Destructuring error object and getting property and constraints
-        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
-        const { property, constraints } = error;
-        acc[property] = Object.values(constraints || {});
-        return acc;
-      }, {});
-      return next(
-        res.status(400).json({ success: false, message: validation_error })
-      );
-    }
-
     // check if email is registered with business
-
     const business = await Business.findOne({
       user: new ObjectId(req.user._id),
     });
@@ -162,12 +125,24 @@ export const getSingleBusiness = async (req: any, res: any, next: any) => {
       is_verified: true,
       account_status: BusinessAccountStatus.APPROVED,
     });
+
+    const images: [] = business.image.map((image: string) => {
+      image = BASE_URL.backend + image.replace(/\\/g, "/");
+      return image;
+    });
+
+    const opening_hours = DAYS.map((day) => {
+      const open = business.opening_hours[day].open;
+      const closes = business.opening_hours[day].closes;
+
+      return { day, open, closes };
+    });
     const result = {
       business_location: business.business_location,
       name: business.name,
       description: business.description,
-      logo: business.logo,
-      image: business.image,
+      logo: BASE_URL.backend + business.logo.replace(/\\/g, "/"),
+      images,
       phone_number: business.phone_number,
       telephone: business.telephone,
       website: business.website,
@@ -179,6 +154,9 @@ export const getSingleBusiness = async (req: any, res: any, next: any) => {
       is_online: business.is_online,
       is_verified: business.is_verified,
       slug: business.slug,
+      amenities: business.amenity,
+      email: business.email,
+      opening_hours,
     };
     return res.status(200).json({ success: true, business: result });
   } catch (error: any) {
@@ -190,54 +168,11 @@ export const getSingleBusiness = async (req: any, res: any, next: any) => {
 
 export const updateBusiness = async (req: any, res: any, next: any) => {
   try {
-    const {
-      name,
-      description,
-      phone_number,
-      telephone,
-      website,
-      opening_hours,
-      amenity,
-      social_links,
-      address,
-      latitude,
-      longitude,
-    } = req.body;
+    const { latitude, longitude } = req.body;
 
     // Handle Single Image
     let logo: string = "";
     let image: any = [];
-
-    const payload = new UpdateBusinessDTO();
-    payload.name = name;
-    payload.description = description;
-    payload.logo = logo;
-    payload.image = image;
-    payload.phone_number = phone_number;
-    payload.telephone = telephone;
-    payload.website = website;
-    payload.opening_hours = opening_hours;
-    payload.amenity = amenity;
-    payload.social_links = social_links;
-    payload.address = address;
-    payload.latitude = latitude;
-    payload.longitude = longitude;
-
-    // Validation
-    const errors = await validate(payload);
-
-    if (errors.length > 0) {
-      const validation_error = errors.reduce((acc: any, error) => {
-        // Destructuring error object and getting property and constraints
-        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
-        const { property, constraints } = error;
-        acc[property] = Object.values(constraints || {});
-        return acc;
-      }, {});
-      return next(
-        res.status(400).json({ success: false, message: validation_error })
-      );
-    }
 
     // check if email is registered with business
     const business = await Business.findOne({
@@ -254,16 +189,8 @@ export const updateBusiness = async (req: any, res: any, next: any) => {
       );
     }
 
-    if (payload.logo) {
-      payload.logo = null;
-    }
-    if (payload.image) {
-      payload.image = [];
-    }
-    if (req.files["logo"]) {
+    if (req.files && req.files["logo"]) {
       logo = req.files["logo"][0].path;
-      payload.logo = logo;
-
       // Delete old logo (assuming business.logo is an array)
       if (business.logo && business.logo.length > 0) {
         const path = business.logo;
@@ -271,10 +198,9 @@ export const updateBusiness = async (req: any, res: any, next: any) => {
       }
     }
 
-    if (req.files["image"]) {
+    if (req.files && req.files["image"]) {
       const images = req.files["image"];
       images.forEach((item: any) => image.push(item.path));
-      payload.image = image;
 
       // Delete old images
       if (business.image && business.image.length > 0) {
@@ -287,28 +213,27 @@ export const updateBusiness = async (req: any, res: any, next: any) => {
       coordinates: [longitude, latitude],
     };
 
-    // save business
-    const updated_business = {
-      name: payload.name,
-      slug: slugify(name),
-      description: payload.description,
-      logo: payload.logo,
-      image: payload.image,
-      phone_number: payload.phone_number,
-      telephone: payload.telephone,
-      website: payload.website,
-      opening_hours: payload.opening_hours,
-      amenity: payload.amenity,
-      social_links: payload.social_links,
-      address: payload.address,
-      business_location: location,
+    const updated_data = {
+      ...req.body,
     };
-
-    await Business.findByIdAndUpdate(business._id, updated_business, {
+    if (req.body.name) {
+      updated_data.slug = slugify(req.body.name);
+    }
+    if (latitude && longitude) {
+      updated_data.location = location;
+    }
+    if (logo) {
+      updated_data.logo = logo;
+    }
+    if (image.length > 0) {
+      updated_data.image = image;
+    }
+    await Business.findByIdAndUpdate(business._id, updated_data, {
       new: true,
       runValidators: true,
       useFindAndModify: false,
     });
+
     res.status(200).json({
       success: true,
       message: "Successfully Update Business Details.",

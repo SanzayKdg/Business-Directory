@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./Layout/Header/Header.js";
+import Footer from "./Layout/Footer/Footer.js";
 import "./App.css";
-import Header from "./Layout/Header/Header";
-import Footer from "./Layout/Footer/Footer";
 // ------------------------ LAZY LOADING ----------------------------------------
 
 const Home = lazy(() => import("./Components/Home/Home"));

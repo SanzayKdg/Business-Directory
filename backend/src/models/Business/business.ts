@@ -5,11 +5,13 @@ import {
   BusinessTimings,
 } from "../../@types/business.t.js";
 import { Point } from "geojson";
+import { SocialLinksDTO } from "src/controllers/Business/dto/business.dto.js";
 
 interface BusinessDocument extends Document {
   opening_hours: BusinessTimings;
-  amenity: BusinessAmenities;
+  amenity: string[];
   name: string;
+  email: string;
   slug: string;
   description: string;
   logo: any;
@@ -19,7 +21,7 @@ interface BusinessDocument extends Document {
   vat_number: string;
   website: string;
   category: string;
-  social_links: string[];
+  social_links: SocialLinksDTO[];
   account_status: BusinessAccountStatus;
   business_location: Point;
   address: string;
@@ -43,18 +45,19 @@ const businessSchema = new mongoose.Schema<BusinessDocument>(
       required: [true, "Please enter slug name"],
       unique: true,
     },
+    email: {
+      type: String,
+    },
     description: {
       type: String,
       required: [true, "Please enter business description"],
     },
     logo: {
       type: String,
-      required: [true, "Please add your business logo."],
     },
     image: [
       {
         type: String,
-        required: [true, "Please add your business images"],
       },
     ],
     phone_number: {
@@ -80,14 +83,11 @@ const businessSchema = new mongoose.Schema<BusinessDocument>(
       type: Schema.Types.Mixed,
       default: {},
     },
-    amenity: {
-      type: Schema.Types.Mixed,
-      default: {},
-    },
+    amenity: [{ type: String, default: [] }],
     social_links: [
       {
-        type: String,
-        default: [],
+        name: { type: String },
+        url: { type: String },
       },
     ],
     account_status: {
