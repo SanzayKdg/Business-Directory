@@ -5,8 +5,6 @@
     align-items: center;
     gap: 2rem;
     margin-top: -10rem;
-    margin-bottom: 8rem;
-
 }
 
 .listing__bg {
@@ -83,13 +81,11 @@
     padding: 0 8rem;
     margin-top: 4rem;
     display: flex;
-    border: 2px solid red;
     gap: 2rem;
 }
 
 .details__left {
     flex: 0.6;
-    border: 2px solid red;
 
 }
 
@@ -140,8 +136,13 @@
     height: 180px;
     width: 234px;
     cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.3s  ease-in-out;
 }
 
+.grid__items:hover{
+    transform: scale(1.1);
+}
 .amenities__gird {
     margin-top: 2rem;
     display: flex;
@@ -167,7 +168,6 @@
 
 .details__right {
     flex: 0.4;
-    border: 2px solid blue;
 }
 
 
@@ -223,4 +223,12 @@
 .opening__days,
 .opened {
     font-weight: 600;
+}
+
+.listing__details__newsletter{
+    margin-top: 8rem;
+    width: 100%;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #f9f9f9;
 }

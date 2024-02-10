@@ -1,6 +1,13 @@
+
 .services__card {
   border-radius: 10px;
   box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.services__card:hover {
+  transform: scale(1.05);
 }
 
 .service__background {
@@ -24,10 +31,10 @@
   padding-left: 1rem;
 }
 
-.service__details{
-    margin-top: -1rem;
-    padding-left: 0.5rem;
-    width: 100%;
+.service__details {
+  margin-top: -1rem;
+  padding-left: 0.5rem;
+  width: 100%;
 }
 
 .business__name {
@@ -38,9 +45,11 @@
   display: flex;
   margin-top: 1rem;
 }
-.location__icon{
-    margin-top: 5px;
+
+.location__icon {
+  margin-top: 5px;
 }
+
 .service__icon {
   color: var(--black-50);
   margin-right: 10px;

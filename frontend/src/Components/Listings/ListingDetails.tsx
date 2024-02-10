@@ -248,7 +248,7 @@ const ListingDetails = () => {
       </section>
 
       {/* ---------------------- SINGLE LISTING - NEWSLETTER  ------------------------------------- */}
-      <section className="home__newsletter px__8">
+      <section className="listing__details__newsletter px__8">
         <Newsletter />
       </section>
     </section>

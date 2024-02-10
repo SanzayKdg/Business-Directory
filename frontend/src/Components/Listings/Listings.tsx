@@ -30,6 +30,8 @@ const Listings = () => {
 
   return (
     <div className="listing__container">
+      {/* ---------------------- LISTING - HERO SECTION  ------------------------------------- */}
+
       <div className="home__bg">
         <Image
           src="/background/bg1.jpg"
@@ -62,6 +64,7 @@ const Listings = () => {
                   focusBorderColor="white"
                   border="hidden"
                 />
+                
                 <FaSearch className="filter__search__icon" />
               </div>
 
@@ -150,7 +153,7 @@ const Listings = () => {
           </div>
 
           <div className="listings__cards__container">
-            {listings && listings.map((item) => <ListingCard item={item} />)}
+            {listings && listings.map((item) => <ListingCard listing={item} />)}
           </div>
         </div>
       </div>

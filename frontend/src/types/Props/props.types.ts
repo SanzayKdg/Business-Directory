@@ -1,5 +1,10 @@
-import { AllListings } from "../BusinessTypes"
+import { AllBlogType } from "../BlogsTypes";
+import { AllListings } from "../BusinessTypes";
 
-export type ListingCardType= {
-    item : AllListings
-}
+export type ListingCardType = {
+  listing: AllListings;
+};
+
+export type BlogCardType = {
+  blog: AllBlogType;
+};

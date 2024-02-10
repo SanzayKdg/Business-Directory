@@ -5,10 +5,13 @@ import ListingCard from "../../Layout/ListingCard/ListingCard";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurReviews from "../../Layout/Reviews/OurReviews";
 import SearchForm from "../../Layout/SearchForm/SearchForm";
-import { blogs, business__categories } from "../../dummydata";
+import { business__categories } from "../../dummydata";
 import "./Home.css";
 import { AllListings } from "../../types/BusinessTypes";
 import { getAllBusiness } from "../../services/business/business";
+import BlogsCard from "../../Layout/BlogsCard/BlogsCard";
+import { getAllBlogs } from "../../services/blogs/blogs";
+import { AllBlogType } from "../../types/BlogsTypes";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -18,13 +21,19 @@ const Home = () => {
   );
 
   const [listings, setListings] = useState<AllListings[] | []>([]);
-
+  const [blogs, setBlogs] = useState<AllBlogType[] | []>([]);
   useEffect(() => {
     const fetchListings = async () => {
       const businesses = await getAllBusiness();
       setListings(businesses);
     };
 
+    const fetchAllBlogs = async () => {
+      const blogs = await getAllBlogs();
+      setBlogs(blogs);
+    };
+
+    fetchAllBlogs();
     fetchListings();
   }, []);
 
@@ -117,7 +126,9 @@ const Home = () => {
 
           <div className="home__services__container">
             {most__searched &&
-              most__searched.map((item) => <ListingCard item={item} />)}
+              most__searched.map((listing) => (
+                <ListingCard listing={listing} key={listing.slug} />
+              ))}
           </div>
         </div>
       </div>
@@ -245,36 +256,7 @@ const Home = () => {
 
         <div className="home__services__container">
           {blogs &&
-            blogs.map((blog) => (
-              <Link key={blog.title} to={"/"} className="blogs__card">
-                <div className="blog__top">
-                  <Image
-                    className="blog__background"
-                    src={blog.cover}
-                    alt="Business Image"
-                  />
-                </div>
-
-                <div className="blogs__mid">
-                  <div className="blog__details">
-                    <div className="blog__details__top">
-                      <p className="p__text blog__tags">{blog.tags[0]}</p>
-                      <p className="p__text blog__divider">.</p>
-                      <p className="p__text blog__tags">{blog.tags[1]}</p>
-                    </div>
-
-                    <p className="p__text blog__title">
-                      <b>{blog.title}</b>
-                    </p>
-
-                    <div className="user__blog">
-                      <p className="p__text blog__user__details">19th March</p>
-                      <p className="p__text blog__user__details">{blog.user}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+            blogs.map((blog) => <BlogsCard blog={blog} key={blog.title} />)}
         </div>
       </div>
 

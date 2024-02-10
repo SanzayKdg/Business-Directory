@@ -91,7 +91,9 @@
     width: 100%;
 }
 
-
+.filter__reset__btn:hover{
+    color: #f03250;
+}
 
 .all__listings {
     flex: 0.8;

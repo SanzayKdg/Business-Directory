@@ -1,7 +1,21 @@
 import mongoose from "mongoose";
 import { BlogCategory, BlogStatus } from "../../@types/blogs.t.js";
 
-const blogSchmea = new mongoose.Schema(
+interface BlogDocument extends Document {
+  title: string;
+  slug: string;
+  description: string;
+  category: BlogCategory;
+  cover: string;
+  image: string[];
+  tags: string[];
+  user: Object;
+  blog_status: BlogStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const blogSchmea = new mongoose.Schema<BlogDocument>(
   {
     title: {
       type: String,
@@ -53,6 +67,6 @@ const blogSchmea = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Blog = mongoose.model("Blogs", blogSchmea);
+const Blog = mongoose.model<BlogDocument>("Blogs", blogSchmea);
 
 export default Blog;

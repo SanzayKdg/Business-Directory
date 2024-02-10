@@ -25,6 +25,4 @@ export const api2 = axios.create({
   withCredentials: true,
 });
 
-// google maps api
 
-export const GOOGLE_MAP_API_KEY: string = "AIzaSyCodRFdxUuaO1xhadurtAbO6Qct3qcI0GI";

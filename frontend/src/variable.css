@@ -3,7 +3,7 @@
     --secondary-color: #147EFB;
     --black: #261f22;
     --black-75: rgb(38, 31, 34, .75);
-    --black-50: rgb(38, 31, 34, .50);
+    --black-50: rgba(38, 31, 34, 0.5);
     --black-25: rgb(38, 31, 34, .25);
     --black-10: rgb(38, 31, 34, .10);
     --black-5: rgb(38, 31, 34, .05);

@@ -7,26 +7,22 @@ import "./ListingCard.css";
 import { ListingCardType } from "../../types/Props/props.types";
 
 const ListingCard = (props: ListingCardType) => {
-  const { item } = props;
+  const { listing } = props;
   return (
-    <Link
-      key={item.name}
-      to={`/listing/${item.slug}`}
-      className="services__card"
-    >
+    <Link to={`/listing/${listing.slug}`} className="services__card">
       <div className="services__top">
         <Image
           className="service__background"
-          src={item.image}
+          src={listing.image}
           alt="Business Image"
         />
       </div>
 
       <div className="services__mid">
-        <Image className="service__logo" src={item.logo} />
+        <Image className="service__logo" src={listing.logo} />
         <div className="service__details">
           <p className="p__text business__name">
-            <b>{item.name}</b>
+            <b>{listing.name}</b>
           </p>
           <div className="ratings">
             <StarRating
@@ -40,26 +36,26 @@ const ListingCard = (props: ListingCardType) => {
           <div className="home__service__contact">
             <div className="service__location">
               <FaLocationDot className="service__icon location__icon" />
-              <p className="service__address">{item.address}</p>
+              <p className="service__address">{listing.address}</p>
             </div>
             <div className="service__phone">
               <FaPhoneAlt className="service__icon" />
-              <p className="service__address">(+977) {item.contact}</p>
+              <p className="service__address">(+977) {listing.contact}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="services__bottom">
         <p className="service__category p__text">
-          <b>{item.category}</b>
+          <b>{listing.category}</b>
         </p>
 
         <p
           className={`service__open__status p__text ${
-            item.is_online ? "green__text" : "red__text"
+            listing.is_online ? "green__text" : "red__text"
           } `}
         >
-          <b>{item.is_online ? "Open" : "Closed"}</b>
+          <b>{listing.is_online ? "Open" : "Closed"}</b>
         </p>
       </div>
     </Link>

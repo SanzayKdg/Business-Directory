@@ -19,7 +19,7 @@ const Header = () => {
           About Us
         </NavLink>
         <NavLink to="/blogs" className="nav__link">
-          Blog
+          Blogs
         </NavLink>
         <NavLink to="/contact" className="nav__link">
           Contact Us

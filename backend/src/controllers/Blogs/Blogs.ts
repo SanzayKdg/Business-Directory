@@ -1,16 +1,16 @@
 import { validate } from "class-validator";
-import { CreateBlogDTO, UpdateBlogDTO } from "./dto/BlogDto.js";
+import { UpdateBlogDTO } from "./dto/BlogDto.js";
 import Blog from "../../models/Blog/blogs.js";
-import slugify from "slugify";
 import { BlogStatus } from "../../@types/blogs.t.js";
 import * as fs from "fs";
-import { ObjectId } from "mongodb";
+import { slugify } from "../../@helpers/slugify.js";
+import { BASE_URL } from "../../@config/constants.config.js";
 
 // ---------------------- CREATE NEW BLOG (PUBLC -- AUTH) ---------------------------------
 export const newBlog = async (req: any, res: any, next: any) => {
   try {
-    const { title, slug, description, tags, category } = req.body;
-    // const slug = slugify(title, { lower: true });
+    const { title, description, tags, category } = req.body;
+    const slug = slugify(title);
     // Handle Single Image
     const cover = req.files["cover"][0].path;
     let image: any = [];
@@ -19,39 +19,14 @@ export const newBlog = async (req: any, res: any, next: any) => {
     const images = req.files["image"];
     images.forEach((item: any) => image.push(item.path));
 
-    const payload = new CreateBlogDTO();
-    payload.title = title;
-    payload.slug = slug;
-    payload.description = description;
-    payload.cover = cover;
-    payload.image = image;
-    payload.tags = tags;
-    payload.category = category;
-
-    // Validation
-    const errors = await validate(payload);
-
-    if (errors.length > 0) {
-      const validation_error = errors.reduce((acc: any, error) => {
-        // Destructuring error object and getting property and constraints
-        // For e.g. property : password, constraint: minLength['password must be longer or than equal to 8 characters ]
-        const { property, constraints } = error;
-        acc[property] = Object.values(constraints || {});
-        return acc;
-      }, {});
-      return next(
-        res.status(400).json({ success: false, message: validation_error })
-      );
-    }
-
     await Blog.create({
-      title : payload.title,
-      slug : payload.slug,
-      description : payload.description,
-      tags : payload.tags,
-      cover : payload.cover,
-      image : payload.image,
-      category : payload.category,
+      title,
+      slug,
+      description,
+      tags,
+      cover,
+      image,
+      category,
       user: req.user._id,
     });
 
@@ -66,15 +41,27 @@ export const newBlog = async (req: any, res: any, next: any) => {
 // ---------------------- GET ALL BLOGS (PUBLC -- NO AUTH) ---------------------------------
 export const getAllBlogs = async (req: any, res: any, next: any) => {
   try {
-    const blogs = await Blog.find({ blog_status: BlogStatus.PUBLISHED });
-
+    const blogs = await Blog.find({ blog_status: BlogStatus.PUBLISHED })
+      .populate("user", "full_name") // Populate the user name
+      .exec();
     if (!blogs) {
       return next(
         res.status(400).json({ success: false, message: "No Blogs Found." })
       );
     }
+    const filteredBlogs = blogs.map((blog) => {
+      return {
+        title: blog.title,
+        slug: blog.slug,
+        cover: BASE_URL.backend + blog.cover.replace(/\\/g, "/"),
+        created_at: blog.createdAt.toDateString().slice(4),
+        author: blog.user,
+        tags: blog.tags,
+        status: blog.blog_status,
+      };
+    });
 
-    res.status(200).json({ success: true, blogs });
+    res.status(200).json({ success: true, blogs: filteredBlogs });
   } catch (error: any) {
     res.staus(500).json({ success: false, message: error.message });
   }
@@ -128,12 +115,10 @@ export const updateBlog = async (req: any, res: any, next: any) => {
 
     if (!blog) {
       return next(
-        res
-          .status(400)
-          .json({
-            success: false,
-            message: "Blog doesnot exists or have been deleted.",
-          })
+        res.status(400).json({
+          success: false,
+          message: "Blog doesnot exists or have been deleted.",
+        })
       );
     }
 
