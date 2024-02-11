@@ -38,8 +38,6 @@ export type BlogCategory = {
   OTHER: "OTHER";
 };
 
-
-
 export type CategoryType = {
   name: string;
   noOfBlogs: number;
@@ -56,12 +54,19 @@ export type BlogAuthor = {
 export type AllBlogType = {
   title: string;
   slug: string;
-  description: string;
-  category: BlogCategory;
   cover: string;
-  image: string[];
   tags: string[];
   author: BlogAuthor;
-  status: BlogStatus;
+  created_at: string;
+};
+
+export type SingleBlogType = {
+  title: string;
+  slug: string;
+  cover: string;
+  images: string[];
+  description: string;
+  author: BlogAuthor;
+  tags: string[];
   created_at: string;
 };

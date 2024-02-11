@@ -1,0 +1,62 @@
+.teams__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 10px;
+    box-shadow: 1px 5px 30px 1px rgba(0, 0, 0, 0.1);
+}
+
+.team__image {
+    width: 270px;
+    height: 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.teams__desc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.team__designation {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #f03250;
+    font-size: 12px;
+    line-height: 25px;
+}
+
+.team__name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 25px;
+    margin-bottom: 10px;
+}
+
+.team__social {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.team__social__container {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.social__insta {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social__linkedin {
+    background-color: #0077B5;
+}

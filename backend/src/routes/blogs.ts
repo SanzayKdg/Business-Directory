@@ -24,7 +24,7 @@ router.route("/update/:id").patch(is_authenticated, blogUpload, updateBlog);
 
 // ---------------------- PUBLIC ENDPOINT (NO AUTH) ---------------------------------
 router.route("/all").get(getAllBlogs);
-router.route("/:id").get(getSinlgeBlog);
+router.route("/:slug").get(getSinlgeBlog);
 // ---------------------- BLOGS ENDS HERE ---------------------------------
 
 // ---------------------- REVIEWS ENDPOINT START HERE ---------------------------------

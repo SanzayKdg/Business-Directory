@@ -54,10 +54,9 @@ export const getAllBlogs = async (req: any, res: any, next: any) => {
         title: blog.title,
         slug: blog.slug,
         cover: BASE_URL.backend + blog.cover.replace(/\\/g, "/"),
-        created_at: blog.createdAt.toDateString().slice(4),
         author: blog.user,
         tags: blog.tags,
-        status: blog.blog_status,
+        created_at: blog.createdAt.toDateString().slice(4),
       };
     });
 
@@ -71,10 +70,12 @@ export const getAllBlogs = async (req: any, res: any, next: any) => {
 
 export const getSinlgeBlog = async (req: any, res: any, next: any) => {
   try {
-    const blog = await Blog.findById({
-      _id: req.params.id,
+    const blog = await Blog.findOne({
+      slug: req.params.slug,
       blog_status: BlogStatus.PUBLISHED,
-    });
+    })
+      .populate("user", "full_name")
+      .exec();
 
     if (!blog) {
       return next(
@@ -84,8 +85,22 @@ export const getSinlgeBlog = async (req: any, res: any, next: any) => {
         })
       );
     }
+    const images = blog.image.map((image) => {
+      image = BASE_URL.backend + image.replace(/\\/g, "/");
+      return image;
+    });
+    const filteredBlog = {
+      title: blog.title,
+      slug: blog.slug,
+      cover: BASE_URL.backend + blog.cover.replace(/\\/g, "/"),
+      images,
+      description: blog.description,
+      author: blog.user,
+      tags: blog.tags,
+      created_at: blog.createdAt.toDateString().slice(4),
+    };
 
-    res.status(200).json({ success: true, blog });
+    res.status(200).json({ success: true, blog: filteredBlog });
   } catch (error: any) {
     res.staus(500).json({ success: false, message: error.message });
   }
