@@ -71,6 +71,10 @@
     display: flex;
     gap: 2rem;
 }
+.about__us{
+    margin-top: 8rem;
+    width: 100%;
+}
 
 .about__newsletter {
     margin-top: 8rem;

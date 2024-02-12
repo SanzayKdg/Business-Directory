@@ -2,6 +2,8 @@ import { Image } from "@chakra-ui/react";
 import "./About.css";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import OurTeams from "../../Layout/OurTeams/OurTeams";
+import OurReviews from "../../Layout/Reviews/OurReviews";
+import HowItWorks from "../../Layout/HowItWorks/HowItWorks";
 const About = () => {
   return (
     <section className="about__section">
@@ -64,6 +66,15 @@ const About = () => {
         </div>
       </section>
 
+      {/* ---------------------- ABOUT - HOW IT WORKS  ------------------------------------- */}
+      <section className="about__us px__8">
+        <HowItWorks />
+      </section>
+
+      {/* ---------------------- ABOUT - CLIENTS  ------------------------------------- */}
+      <section className="about__us px__8">
+        <OurReviews />
+      </section>
       {/* ---------------------- ABOUT - OUR TEAMS  ------------------------------------- */}
       <section className="about__teams px__8">
         <div className="teams__header">

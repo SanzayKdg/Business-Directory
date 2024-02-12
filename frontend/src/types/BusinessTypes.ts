@@ -63,3 +63,13 @@ export const DAYS = [
   "Friday",
   "Saturday",
 ];
+
+export const opening_hours = {
+  sun: { open: "10:00", closes: "18:00" },
+  mon: { open: "10:00", closes: "18:00" },
+  tue: { open: "10:00", closes: "18:00" },
+  wed: { open: "10:00", closes: "18:00" },
+  thu: { open: "10:00", closes: "18:00" },
+  fri: { open: "10:00", closes: "18:00" },
+  sat: { open: "closes", closes: "closes" },
+};

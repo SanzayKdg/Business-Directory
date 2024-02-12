@@ -12,6 +12,7 @@ import { getAllBusiness } from "../../services/business/business";
 import BlogsCard from "../../Layout/BlogsCard/BlogsCard";
 import { getAllBlogs } from "../../services/blogs/blogs";
 import { AllBlogType } from "../../types/BlogsTypes";
+import HowItWorks from "../../Layout/HowItWorks/HowItWorks";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -40,13 +41,13 @@ const Home = () => {
   const most__searched = listings.slice(0, 6);
   return (
     <section className="home__container">
-      <div className="home__bg">
+      <section className="home__bg">
         <Image
           src="/background/bg1.jpg"
           alt="background image"
           className="homebg__image"
         />
-      </div>
+      </section>
       {/* ---------------------- HOME - FORM  ------------------------------------- */}
       <div className="home__form">
         <SearchForm
@@ -57,7 +58,7 @@ const Home = () => {
       </div>
       {/* ---------------------- HOME - POPULAR CATEGORIES  ------------------------------------- */}
 
-      <div className="home__popular__categories px__8">
+      <section className="home__popular__categories px__8">
         <div className="popular__categories__top">
           <h1 className="text__center black__text h1__text">
             Most Popular Categories
@@ -92,11 +93,11 @@ const Home = () => {
             ))}
         </div>
         <div className="popular__categories__bottom"></div>
-      </div>
+      </section>
 
       {/* ---------------------- HOME - MOST SEARCHED CATEGORIES / SERVICES  ------------------------------------- */}
 
-      <div className="home__services px__8">
+      <section className="home__services px__8">
         <div className="home__services__top">
           <h1 className="black__text h1__text text__center">
             Most Searched Services
@@ -131,11 +132,11 @@ const Home = () => {
               ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ---------------------- HOME - HOW IT WORKS  ------------------------------------- */}
-      <div className="home__works__description px__8">
-        <div className="home__works__top">
+      <section className="home__works__description px__8">
+        {/* <div className="home__works__top">
           <h1 className="black__text h1__text text__center">
             How Does It Work
           </h1>
@@ -188,11 +189,12 @@ const Home = () => {
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+        <HowItWorks />
+      </section>
 
       {/* ---------------------- HOME - FEATURED LOCATION  ------------------------------------- */}
-      <div className="featured__location px__8">
+      <section className="featured__location px__8">
         <div className="featured__location__top">
           <h1 className="black__text h1__text text__center">
             Top Featured Location
@@ -236,17 +238,17 @@ const Home = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ---------------------- HOME - OUR REVIEWS  ------------------------------------- */}
 
-      <div className="reviews__section px__8">
+      <section className="reviews__section px__8">
         <OurReviews />
-      </div>
+      </section>
 
       {/* ---------------------- HOME - BLOGS / NEWS POST  ------------------------------------- */}
 
-      <div className="blogs__section px__8">
+      <section className="blogs__section px__8">
         <div className="home__works__top">
           <h1 className="black__text h1__text text__center">News Posts</h1>
           <h4 className="black__text p__text text__center">
@@ -258,12 +260,12 @@ const Home = () => {
           {blogs &&
             blogs.map((blog) => <BlogsCard blog={blog} key={blog.title} />)}
         </div>
-      </div>
+      </section>
 
       {/* ---------------------- HOME - NEWSLETTER  ------------------------------------- */}
-      <div className="home__newsletter px__8">
+      <section className="home__newsletter px__8">
         <Newsletter />
-      </div>
+      </section>
     </section>
   );
 };
