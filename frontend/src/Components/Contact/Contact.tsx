@@ -1,4 +1,11 @@
-import { Button, FormLabel, Image, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormLabel,
+  Image,
+  Input,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 import "./Contact.css";
 import Newsletter from "../../Layout/NewsLetter/Newsletter";
 import { FaLocationDot } from "react-icons/fa6";
@@ -15,13 +22,57 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { DAYS } from "../../types/BusinessTypes";
 import { IoSendSharp } from "react-icons/io5";
+import { ContactMessage, ContactUsResponse } from "../../types/ContactUsTypes";
+import { useEffect, useState } from "react";
+import { sendMessage } from "../../services/contact/contact";
 const today = new Date(Date.now()).getDay();
 const time = new Date(Date.now()).toTimeString().slice(0, 5);
-console.log(time);
+
 const Contact = () => {
-  const submitHandler = () => {
-    alert("I am submitted");
+  const [newMessage, setNewMessage] = useState<ContactMessage>({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [response, setResponse] = useState<ContactUsResponse>({
+    success: undefined,
+    message: "",
+  });
+
+  const onChangeHandler = (e) => {
+    setNewMessage({ ...newMessage, [e.target.name]: e.target.value });
   };
+  const toast = useToast();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const messageSend = await sendMessage(newMessage);
+    setResponse(messageSend);
+
+  };
+
+  useEffect(() => {
+  
+    if (response.success === false) {
+      toast({
+        title: "Error!",
+        description: `${response.message}`,
+        status: "error",
+        isClosable: true,
+      });
+    }
+    if (response.success) {
+      toast({
+        title: "Success.",
+        description: `${response.message}`,
+        status: "success",
+        isClosable: true,
+      });
+    }
+  }, [response, toast]);
+
   return (
     <section className="contactus__container">
       {/* ---------------------- CONTACT US - HERO SECTION  ------------------------------------- */}
@@ -60,7 +111,7 @@ const Contact = () => {
         <section className="contactus__left">
           <form className="contact__form" onSubmit={submitHandler}>
             <div className="form__top">
-              <div className="form__item">
+              <div className="contact__form__item">
                 <FormLabel htmlFor="first__name" className="p__text">
                   First Name
                 </FormLabel>
@@ -71,9 +122,11 @@ const Contact = () => {
                   placeholder="John"
                   focusBorderColor="black"
                   border="hidden"
+                  name="first_name"
+                  onChange={onChangeHandler}
                 />
               </div>
-              <div className="form__item">
+              <div className="contact__form__item">
                 <FormLabel htmlFor="last__name" className="p__text">
                   Last Name
                 </FormLabel>
@@ -84,11 +137,13 @@ const Contact = () => {
                   placeholder="Doe"
                   border="hidden"
                   focusBorderColor="black"
+                  name="last_name"
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>
 
-            <div className="form__item">
+            <div className="contact__form__item">
               <FormLabel htmlFor="email" className="p__text">
                 Email
               </FormLabel>
@@ -99,22 +154,26 @@ const Contact = () => {
                 placeholder="john.doe@gmail.com"
                 focusBorderColor="black"
                 border="hidden"
+                name="email"
+                onChange={onChangeHandler}
               />
             </div>
-            <div className="form__item">
+            <div className="contact__form__item">
               <FormLabel htmlFor="contact" className="p__text">
                 Phone
               </FormLabel>
               <Input
-                type="email"
+                type="text"
                 className="p__text form__input"
                 id="contact"
                 placeholder="+977 987654321"
                 focusBorderColor="black"
                 border="hidden"
+                name="phone"
+                onChange={onChangeHandler}
               />
             </div>
-            <div className="form__item">
+            <div className="contact__form__item">
               <FormLabel htmlFor="contact" className="p__text">
                 Message
               </FormLabel>
@@ -124,6 +183,8 @@ const Contact = () => {
                 placeholder="Tell us your concern."
                 focusBorderColor="black"
                 border="hidden"
+                name="message"
+                onChange={onChangeHandler}
               />
             </div>
 

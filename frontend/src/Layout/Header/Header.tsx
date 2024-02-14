@@ -10,17 +10,20 @@ import {
   PopoverTrigger,
   Stack,
   Text,
-  useBreakpointValue,
   useColorModeValue,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
-import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
+import "./Header.css";
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <nav className="header__contents">
-      <Flex className="nav__flex" align={{ base: "center", md: "center" }}>
+      <Flex
+        className="nav__flex"
+        align={{ base: "center", md: "center" }}
+        justify={{ md: "space-between" }}
+      >
         <Flex
           flex={{ base: 1, md: "auto" }}
           ml={{ base: -2 }}
@@ -38,7 +41,7 @@ const Header = () => {
         <Flex
           className="nav__start"
           flex={{ base: 1 }}
-          justify={{ md: "start" }}
+          justify={{ md: "space-between" }}
         >
           <Avatar src="/logo/logo512.svg" size="lg" className="" name="Logo" />
           <Flex
@@ -51,16 +54,15 @@ const Header = () => {
         </Flex>
 
         <Stack
-          flex={{ base: 1, md: 0 }}
+          flex={{ base: 0.5, md: 0 }}
           justify={"flex-end"}
           direction={"row"}
-          spacing={6}
+          spacing={5}
         >
           <Button
             as={Link}
             fontSize={"sm"}
             fontWeight={400}
-            // variant={"link"}
             to={"/"}
             colorScheme="whiteAlpha"
             className="header__cta__btns"
@@ -84,38 +86,6 @@ const Header = () => {
         <MobileNav />
       </Collapse>
     </nav>
-    // <nav className="header__contents">
-    //   <div className="header__left">
-    //     <Avatar src="/logo/logo512.svg" size="lg" className="" name="Logo" />
-    //   </div>
-    //   <div className="header__mid">
-    //     <NavLink to="/" className="nav__link">
-    //       Home
-    //     </NavLink>
-    //     <NavLink to="/listings" className="nav__link">
-    //       Listings
-    //     </NavLink>
-    //     <NavLink to="/about" className="nav__link">
-    //       About Us
-    //     </NavLink>
-    //     <NavLink to="/blogs" className="nav__link">
-    //       Blogs
-    //     </NavLink>
-    //     <NavLink to="/contact" className="nav__link">
-    //       Contact Us
-    //     </NavLink>
-    //   </div>
-    //   <div className="header__right">
-    //     <Button colorScheme="red" className="header__cta__btns">
-    //       <Link className="add_listing__link" to={"/"}>
-    //         Add Listing +
-    //       </Link>
-    //     </Button>
-    //     {/* <Button style={{marginLeft: "1rem"}} className="header__cta__btns" colorScheme="whiteAlpha">
-    //         <Link to={"/"}>Sign In</Link>
-    //       </Button> */}
-    //   </div>
-    // </nav>
   );
 };
 

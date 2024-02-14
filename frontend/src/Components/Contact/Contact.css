@@ -61,7 +61,7 @@
     display: flex;
     justify-content: space-between;gap: 2rem;
 }
-.form__item{
+.contact__form__item{
     width: 100%;
 }
 .form__input{
